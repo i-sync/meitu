@@ -72,8 +72,10 @@ class MeituTagPipeline:
 class MeituAlbumPipeline:
 
     def process_item(self, item, spider):
+        # print(item)
+        # return
         with session_scope() as session:
-            model = session.query(MeituAlbum).filter(MeituAlbum.name == item["name"]).first()
+            model = session.query(MeituAlbum).filter(MeituAlbum.name == item["name"], MeituAlbum.category_name == item["category_name"]).first()
             if model:
                 print(f'albumn already exists, skip. {item["name"]}, {item["title"]}, {item["origin_link"]}')
                 return

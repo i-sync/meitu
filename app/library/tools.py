@@ -43,18 +43,18 @@ def test_proxy(proxies):
     targets = [
         #"https://www.xiurenb.com/",
         "https://www.meijuntu.com",
-        "https://www.google.com",
+        # "https://www.google.com",
         #"https://www.baidu.com",
         #"https://www.viagle.cn"
     ]
     for target in targets:
         try:
-            res = requests.get(target, proxies=proxies, timeout=10)
+            res = requests.get(target, proxies=proxies, timeout=5)
             if res.status_code == 200:
                 print(res.status_code, proxies["https"], "avaiable!")
                 return True
         except Exception as e:
-            print(e)
+            print(proxies, e)
     return False
 
 
@@ -101,7 +101,35 @@ def test_all_proxy():
     
     return None
 
+def gen_valid_proxy():
+    
+    with open(f"{path}/proxies-all.json", "r+", encoding="utf-8") as f:
+        proxys = json.load(f)
+    
+    if not len(proxys):
+        return None
+
+    valid_list = []
+    for proxy in proxys:    
+        host = proxy["ip"]
+        port = proxy["port"]
+        protocol = proxy["protocols"]
+        proxies = {
+            "http": f"{protocol}://{host}:{port}",
+            "https": f"{protocol}://{host}:{port}"
+        }
+
+        if test_proxy(proxies):
+            valid_list.append(proxy)
+
+    if len(valid_list):
+        with open(f"{path}/proxies.json", "w+", encoding="utf-8") as f:
+            json.dump(valid_list, f, indent=4)
+    print("Done")
+    return None
+
 if __name__ == "__main__":
     print(__file__)
     print(get_proxy())
-    test_all_proxy()
+    # test_all_proxy()
+    gen_valid_proxy()
