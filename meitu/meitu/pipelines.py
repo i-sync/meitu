@@ -6,10 +6,12 @@
 
 # useful for handling different item types with a single interface
 
-import os, sys, time
+import os, sys, time, json
 sys.path.append("..")
 from itemadapter import ItemAdapter
 from app.library.models import session_scope, MeituModel, MeituOrganize, MeituAlbum, MeituAlbumTag, MeituImage, MeituContent, MeituCategory, MeituTag
+
+from app.library.models import MeituMedia, MeituMediaModel, MeituMediaTag
 
 
 class MeituPipeline:
@@ -94,9 +96,9 @@ class MeituAlbumPipeline:
         model.origin_created_at = item["origin_created_at"] if "origin_created_at" in item else time.time()
 
 
-        tags = item["tags"]        
-        images_url = item["images_url"]        
-        contents = item["contents"]        
+        tags = item["tags"]
+        images_url = item["images_url"]
+        contents = item["contents"]
 
         model.created_at = time.time()
         model.updated_at = time.time()
@@ -144,5 +146,83 @@ class MeituAlbumPipeline:
             # commit
             session.commit()
             print(f"album commit, title: {model.title}")
+
+        return item
+
+class MeituMediaPipeline:
+
+    def process_item(self, item, spider):
+        # print(item)
+        # return
+        with session_scope() as session:
+            model = session.query(MeituMedia).filter(MeituMedia.name == item["name"], MeituMedia.category_name == item["category_name"]).first()
+            if model:
+                print(f'media already exists, skip. {item["name"]}, {item["title"]}, {item["origin_link"]}')
+                return
+
+        model = MeituMedia()
+        model.keywords = json.dumps(item["keywords"], ensure_ascii=False)
+
+        model.category_name = item["category_name"]
+        model.name = item["name"]
+        model.title = item["title"]
+        #model.summary = item["summary"]
+        model.description = item["description"]
+        model.cover = item["cover"]
+        model.origin_link = item["origin_link"]
+        model.origin_created_at = item["origin_created_at"] if "origin_created_at" in item else time.time()
+
+
+        tags = item["tags"]
+        contents = item["contents"]
+        model_name = item["model_name"]
+
+        model.created_at = time.time()
+        model.updated_at = time.time()
+        model.is_enabled = 1
+        model.view_count = 0
+
+        with session_scope() as session:
+            session.add(model)
+            session.flush()
+            media_id = model.id
+
+            if len(tags):
+                for t in tags:
+                    tag = session.query(MeituTag).filter(MeituTag.name == t).first()
+                    if tag:
+                        media_tag = MeituMediaTag()
+                        media_tag.media_id = media_id
+                        media_tag.tag_id = tag.id
+                        media_tag.created_at = time.time()
+                        session.add(media_tag)
+                    else:
+                        print(f"tag not found!, media_id:{media_id}, media_name:{model.name}, tag_name:{t}")
+
+            if len(model_name):
+                for t in model_name:
+                    tmp = session.query(MeituModel).filter(MeituModel.name == t).first()
+                    if tmp:
+                        media_model = MeituMediaModel()
+                        media_model.media_id = media_id
+                        media_model.model_id = tmp.id
+                        media_model.created_at = time.time()
+                        session.add(media_model)
+                    else:
+                        print(f"model not found!, media_id:{media_id}, media_name:{model.name}, model_name:{t}")
+
+            # process content table
+            for con in contents:
+                content = MeituContent()
+                content.media_id = media_id
+                content.content = con
+                content.created_at = time.time()
+                content.updated_at = time.time()
+                content.is_enabled = 1
+                session.add(content)
+
+            # commit
+            session.commit()
+            print(f"media commit, title: {model.title}")
 
         return item

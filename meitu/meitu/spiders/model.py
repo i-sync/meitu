@@ -13,7 +13,7 @@ class ModelSpider(scrapy.Spider):
     custom_settings = {
         'DOWNLOADER_MIDDLEWARES': {
             'meitu.middlewares.MeituModelMiddleware': 500,
-            #'xiuren.middlewares.XiurenProxyMiddleware': 543,
+            'meitu.middlewares.MeituProxyMiddleware': 543,
         },
         'ITEM_PIPELINES': {
             'meitu.pipelines.MeituModelPipeline': 300,
@@ -35,20 +35,20 @@ class ModelSpider(scrapy.Spider):
             item["name"] = name
             item["title"] = l.xpath("./p/text()").extract_first().strip()
             item["cover"] = l.xpath("./img/@src").extract_first().strip()
-            
+
             yield scrapy.Request(url = f"{self.base_url}{link}", callback=self.detail_parse, meta={"item": item, "request_type": "model", "model_name": name })
-            
+
 
         page_number = response.meta["page_number"] if "page_number" in response.meta else 1
         page_number += 1
         #if page_number <= last_page:
-        if page_number <= 100:
+        if page_number <= 130:
             next_url = f"{self.base_url}/model/index-{page_number}.html"
             print(page_number, "next page", next_url)
             yield scrapy.Request(url = next_url, callback=self.parse, meta={"page_number": page_number})
 
     def detail_parse(self, response):
-        
+
         # time.sleep(random.random())
         item = response.meta["item"]
         spans = response.xpath("//div[@class='album_info']/div[@class='people-info']/span")

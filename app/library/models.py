@@ -98,18 +98,49 @@ class MeituImage(Base):
     updated_at = Column(Float)
     is_enabled = Column(Boolean)
 
-class MeituContent(Base):
-    __tablename__ = "meitu_content"
-    id = Column(Integer, primary_key=True)
-    album_id = Column(Integer)
-    content = Column(Text)
-    created_at = Column(Float)
-    updated_at = Column(Float)
-    is_enabled = Column(Boolean)
-
 class MeituAlbumTag(Base):
     __tablename__ = "meitu_album_tag"
     id = Column(Integer, primary_key=True)
     album_id = Column(Integer)
     tag_id = Column(Integer)
+    created_at = Column(Float)
+
+
+class MeituMedia(Base):
+    __tablename__ = "meitu_media"
+    id = Column(Integer, primary_key=True)
+    category_name = Column(String(20))
+    keywords = Column(String(200))
+    name = Column(String(200))
+    title = Column(String(500))
+    description = Column(String(2048))
+    cover = Column(String(200))
+    view_count = Column(Integer)
+    origin_link = Column(String(500))
+    origin_created_at = Column(Float)
+    created_at = Column(Float)
+    updated_at = Column(Float)
+    is_enabled = Column(Boolean)
+
+class MeituContent(Base):
+    __tablename__ = "meitu_content"
+    id = Column(Integer, primary_key=True)
+    media_id = Column(Integer)
+    content = Column(Text)
+    created_at = Column(Float)
+    updated_at = Column(Float)
+    is_enabled = Column(Boolean)
+
+class MeituMediaTag(Base):
+    __tablename__ = "meitu_media_tag"
+    id = Column(Integer, primary_key=True)
+    media_id = Column(Integer)
+    tag_id = Column(Integer)
+    created_at = Column(Float)
+
+class MeituMediaModel(Base):
+    __tablename__ = "meitu_media_model"
+    id = Column(Integer, primary_key=True)
+    media_id = Column(Integer)
+    model_id = Column(Integer)
     created_at = Column(Float)
