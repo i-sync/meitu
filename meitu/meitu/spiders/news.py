@@ -140,6 +140,8 @@ class NewsSpider(scrapy.Spider):
         for img in images:
             # 1. remove style
             del img["style"]
+            del img["width"]
+            del img["height"]
 
             # 2/3 change src -> data-src and src -> loading.gif
             img_src = img.get("src")
