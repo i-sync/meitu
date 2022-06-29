@@ -38,7 +38,7 @@ class MeituModel(Base):
     cover = Column(String(200))
     created_at = Column(Float)
     is_enabled = Column(Boolean)
-    
+
 
 class MeituOrganize(Base):
     __tablename__ = "meitu_organize"
@@ -144,3 +144,10 @@ class MeituMediaModel(Base):
     media_id = Column(Integer)
     model_id = Column(Integer)
     created_at = Column(Float)
+
+
+
+class MeituTmpModel(Base):
+    __tablename__ = "meitu_tmp_model"
+    name = Column(String(100), primary_key=True)
+    model_url = Column(String(200))

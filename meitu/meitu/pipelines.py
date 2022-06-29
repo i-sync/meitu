@@ -11,7 +11,7 @@ sys.path.append("..")
 from itemadapter import ItemAdapter
 from app.library.models import session_scope, MeituModel, MeituOrganize, MeituAlbum, MeituAlbumTag, MeituImage, MeituContent, MeituCategory, MeituTag
 
-from app.library.models import MeituMedia, MeituMediaModel, MeituMediaTag
+from app.library.models import MeituMedia, MeituMediaModel, MeituMediaTag, MeituTmpModel
 
 
 class MeituPipeline:
@@ -226,3 +226,31 @@ class MeituMediaPipeline:
             print(f"media commit, title: {model.title}")
 
         return item
+
+
+
+class MeituTmpPipeline:
+
+    def process_item(self, item, spider):
+        # print(item)
+        # return
+        models = item["models"]
+        print(models)
+        if models and len(models):
+            with session_scope() as session:
+                for model in models:
+                    name = model["name"]
+                    model_url = model["model_url"]
+
+
+                    tmp = session.query(MeituTmpModel).filter(MeituTmpModel.name == name).first()
+                    if tmp:
+                        print(f'model name already exists, skip. {name}')
+                        continue
+                    tmp = MeituTmpModel()
+                    tmp.name = name
+                    tmp.model_url = model_url
+                    session.add(tmp)
+
+                #commit
+                session.commit()

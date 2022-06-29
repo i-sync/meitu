@@ -172,3 +172,9 @@ create table meitu_media_model (
     key `idx_model_id` (`model_id`),
     primary key (`id`)
 ) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+create table meitu_tmp_model(
+    `name` varchar(100),
+    `model_url` varchar(200),
+    primary key (`name`)
+) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;

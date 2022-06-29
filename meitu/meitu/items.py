@@ -74,3 +74,7 @@ class MeituMediaItem(scrapy.Item):
     #sub table
     tags = scrapy.Field()
     contents = scrapy.Field()
+
+
+class MeituTmpItem(MeituMediaItem):
+    models = scrapy.Field()
