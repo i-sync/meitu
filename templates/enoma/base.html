@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+{% macro pagination(url, page) %}
+<nav aria-label="pagination">
+    <ul class="pagination flex-wrap">
+        <!-- the first one -->
+        {% if page.has_prev %}
+        <li class="page-item">
+            <a href="javascript:gotoPage({{page.page_index - 1 }});" aria-label="Previous" class="page-link">上页</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" aria-label="Previous">上页</a>
+        </li>
+        {% endif %}
+
+        <!-- the page prefix -->
+        {% for pl in page.prefix %} {% if pl == page.page_index %}
+        <li class="page-item active">
+            <a class="page-link">{{ page.page_index }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a href="javascript:gotoPage({{ pl }});" class="page-link">{{ pl }}</a>
+        </li>
+        {% endif %} {% endfor %} {% if page.page_list|length > 0 and page.page_list[0] > 4 %}
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+        {% endif %}
+
+        <!-- the page list -->
+        {% for pl in page.page_list %} {% if pl == page.page_index %}
+        <li class="page-item active">
+            <a class="page-link">{{ page.page_index }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a href="javascript:gotoPage({{ pl }});" class="page-link">{{ pl }}</a>
+        </li>
+        {% endif %} {% endfor %} {% if page.page_list|length > 0 and page.page_list[-1] < (page.page_count-3) %}
+        <li class="page-item disabled"><a class="page-link">...</a></li>
+        {% endif %}
+
+        <!-- the page suffix -->
+        {% for pl in page.suffix %} {% if pl == page.page_index %}
+        <li class="page-item active">
+            <a class="page-link">{{ page.page_index }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a href="javascript:gotoPage({{ pl }});" class="page-link">{{ pl }}</a>
+        </li>
+        {% endif %} {% endfor %}
+
+        <!-- the last one -->
+        {% if page.has_next %}
+        <li class="page-item">
+            <a href="javascript:gotoPage({{ page.page_index + 1 }});" aria-label="Next" class="page-link" href="#">下页</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" aria-label="Next" href="#">下页</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endmacro %}
+
+{% macro pagination_all(url, page) %}
+<nav aria-label="pagination">
+    <ul class="pagination flex-wrap">
+        <!-- the first one -->
+        {% if page.has_prev %}
+        <li class="page-item">
+            <a href="javascript:gotoPage({{page.page_index - 1 }});" aria-label="Previous" class="page-link">上页</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" aria-label="Previous">上页</a>
+        </li>
+        {% endif %}
+
+        <!-- the page list -->
+        {% for pl in page.page_list %} {% if pl == page.page_index %}
+        <li class="page-item active">
+            <a class="page-link">{{ page.page_index }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a href="javascript:gotoPage({{ pl }});" class="page-link">{{ pl }}</a>
+        </li>
+        {% endif %} {% endfor %}
+
+        <!-- the last one -->
+        {% if page.has_next %}
+        <li class="page-item">
+            <a href="javascript:gotoPage({{ page.page_index + 1 }});" aria-label="Next" class="page-link" href="#">下页</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" aria-label="Next" href="#">下页</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endmacro %}
+
+{# reference: https://droitthemes.com/html/enoma/portfolio-fluid-one.html #}
+
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <link rel="shortcut icon" href="/static/enoma/images/favicon.ico" type="image/x-icon" />
+        <title>{% block title %}{% endblock %}</title>
+        {% block metadata %} {% endblock metadata %}
+
+        <link rel="stylesheet" href="/static/enoma/vendors/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/static/enoma/vendors/fullpage/fullpage.css" />
+        <link rel="stylesheet" href="/static/enoma/vendors/elagent-icon/style.css" />
+        <link rel="stylesheet" href="/static/enoma/vendors/animation/animate.css" />
+        <link rel="stylesheet" href="/static/enoma/vendors/slick/slick.css" />
+        <link rel="stylesheet" href="/static/enoma/vendors/slick/slick-theme.css" />
+        <link rel="stylesheet" href="/static/enoma/css/style.css" />
+        <link rel="stylesheet" href="/static/enoma/css/responsive.css" />
+        <link rel="stylesheet" href="/static/enoma/css/custom.css" />
+
+
+
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+
+        {% if request.state.user_agent.is_mobile %}
+
+        {% else %}
+
+        {% endif %}
+
+        <div class="body_wrapper">
+            <header class="header_area p_absoulte m_p sticky_nav">
+                <nav class="navbar navbar-expand-lg" id="header">
+                    <div class="container-fluid">
+                        <div class="logo_info">
+                            <a href="/" class="navbar-brand logo_two"><img src="/static/enoma/images/meitu_logo.png" srcset="/static/enoma/images/meitu_logo.png 2x" alt="meitu logo" /><img src="/static/enoma/images/meitu_logo.png" srcset="/static/enoma/images/meitu_logo.png 2x" alt="meitu logo" /></a>
+                            <!-- <div class="h_contact_info">
+                                <a href="#">+0074 215 2455</a>
+                                <a href="#"><span class="__cf_email__" data-cfemail="771418190316140337001601125914181a">[email&#160;protected]</span></a>
+                            </div> -->
+                        </div>
+                        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="menu_toggle">
+                                <span class="hamburger">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                                <span class="hamburger-cross">
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto menu">
+                                {% for item in data.menu %}
+                                    <li class="nav-item dropdown submenu">
+                                        <a class="nav-link dropdown-toggle" href="{{item}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{data.menu[item]}} </a>
+
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="burger_menu side_menu">
+                            <div class="dot_icon">
+                                <span class="dot one"></span>
+                                <span class="dot two"></span>
+                                <span class="dot three"></span>
+                                <span class="dot four"></span>
+                                <span class="dot five"></span>
+                                <span class="dot six"></span>
+                                <span class="dot seven"></span>
+                                <span class="dot eight"></span>
+                                <span class="dot nine"></span>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+            <section class="breadcrumb_area_two breadcrumb_area_three parallaxie" data-background="img/bg.jpg" style="background: url(/static/enoma/images/cover.jpg) no-repeat">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="breadcrumb_content">
+                        <h1>meitu</h1>
+                        <p>海量高质量美图欣赏</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="portfolio_fluid_area">
+                {% block content %} {% endblock %}
+            </section>
+
+            <footer class="footer_area" data-bg-color="#ff4a4a">
+                <div class="container">
+                    <div class="footer_top">
+                        <a href="/" class="f_logo"><img src="/static/enoma/images/meitu_logo.png" srcset="/static/enoma/images/meitu_logo.png 2x" alt="meitu logo" /></a>
+                        <h3>美图分享,每日更新.</h3>
+                        <ul class="list-unstyled social_link">
+                            <li>
+                                <a href="#"><i class="social_dribbble"></i><i class="social_dribbble"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="social_googleplus"></i><i class="social_googleplus"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="social_facebook"></i><i class="social_facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="social_twitter"></i><i class="social_twitter"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer_bottom">
+                        <p>Copyright © <script>document.write(new Date().getFullYear())</script></p>
+                        <p>本站数据来自网络，如侵害您的权利请联系本站删除相关信息，邮箱：<a href="mailto:" title=""></a></p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+
+        <!-- <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> -->
+        <script src="/static/enoma/js/jquery-3.2.1.min.js"></script>
+        <script src="/static/enoma/vendors/bootstrap/js/popper.min.js"></script>
+        <script src="/static/enoma/vendors/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/static/enoma/js/parallaxie.js"></script>
+        <!-- <script src="/static/enoma/vendors/slick/slick.min.js"></script> -->
+        <!-- <script src="/static/enoma/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script> -->
+        <!-- <script src="/static/enoma/vendors/isotope/isotope-min.js"></script> -->
+        <script src="/static/enoma/js/custom.js"></script>
+        <!-- <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v652eace1692a40cfa3763df669d7439c1639079717194" integrity="sha512-Gi7xpJR8tSkrpF7aordPZQlW2DLtzUlZcumS8dMQjwDHEnw9I7ZLyiOj/6tZStRBGtGgN6ceN6cMH8z7etPGlw==" data-cf-beacon='{"rayId":"724001ffe816afaf","version":"2022.6.0","r":1,"token":"327f02abe4ab496bb762653489d2ae1d","si":100}' crossorigin="anonymous"></script> -->
+        <script src="/static/enoma/js/index.js"></script>
+
+        {% block bodyscript %} {% endblock %}
+
+
+        <script>
+            window.lazyLoadOptions = {
+                threshold: 0,
+            };
+            window.addEventListener(
+                "LazyLoad::Initialized",
+                function (e) {
+                    console.log(e.detail.instance);
+                },
+                false
+            );
+        </script>
+
+        <!-- lazyload -->
+        <script async src="/static/enoma/js/lazyload.min.js"></script>
+
+    </body>
+</html>

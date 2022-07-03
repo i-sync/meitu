@@ -1,0 +1,7 @@
+<h1>HELLO, Mobile : {{request.state.user_agent.is_mobile}}</h1>
+
+<ul>
+    {% for x in data.menu %}
+        <li>{{x}}</li>
+    {% endfor%}
+</ul>

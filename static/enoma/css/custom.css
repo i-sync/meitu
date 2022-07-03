@@ -1,0 +1,23 @@
+.f_logo img,
+.logo_info img{
+    width: 128px;
+    height: 32px;
+}
+
+
+div.gallery_post_two div.img{
+    display: flex;
+    justify-content: center;
+}
+
+.gallery_inner_four .gallery_item .gallery_post .img{
+    display: flex;
+    justify-content: center;
+    border-radius: 0;
+    /* height: 60%; */
+}
+
+.gallery_item .gallery_post .img img{
+    height: 80% !important;
+    object-fit: cover;
+}

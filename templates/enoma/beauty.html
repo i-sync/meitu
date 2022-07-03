@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}美女图片{% endblock %}
+
+{% block metadata %}
+
+{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+    <!-- <ul class="list-unstyled gallery_filter gallery_filter_two">
+        <li class="active" data-filter="*">All Projects</li>
+        <li data-filter=".design">Design</li>
+        <li data-filter=".market">Marketing</li>
+        <li data-filter=".develop">Development</li>
+        <li data-filter=".br">Branding</li>
+    </ul> -->
+</div>
+<div id="gallery" class="row gallery_inner_four mx-0">
+
+    {% for item in data.albums %}
+    <div class="col-lg-2 col-md-4 col-6 gallery_item px-2">
+        <div class="gallery_post">
+            <div class="img">
+                <img src="/static/enoma/images/loading.gif" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+            </div>
+            <div class="gallery_content">
+                <a href="/beauty/{{item.name}}">
+                    <h3>{{item.title}}</h3>
+                </a>
+                <a href="/model/{{item.model_name}}">
+                    <div class="g_tag">{{item.model_title}}</div>
+                </a>
+                <a href="#">
+                    <div class="g_tag">{{item.origin_created_at | date}}</div>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{{ pagination('?page=', data.page) }}
+
+{% endblock%}
