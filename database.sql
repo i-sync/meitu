@@ -115,6 +115,16 @@ create table meitu_album_tag (
     primary key (`id`)
 ) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+create table meitu_album_model (
+    `id` int not null AUTO_INCREMENT,
+    `album_id` int not null,
+    `model_id` int not null,
+    `created_at` real not null,
+    key `idx_album_id` (`album_id`),
+    key `idx_model_id` (`model_id`),
+    primary key (`id`)
+) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 create table meitu_media (
     `id` int not null AUTO_INCREMENT,
     `category_name` varchar(20) not null,
@@ -129,7 +139,7 @@ create table meitu_media (
     `created_at` real not null,
     `updated_at` real not null,
     `is_enabled` bool not null default 1,
-    unique key `idx_name` (`name`),
+    unique key `idx_name` (`name`, `category_name`),
     unique key `idx_origin_link` (`origin_link`),
     key `idx_origin_created_at` (`origin_created_at`),
     key `idx_title` (`title`),

@@ -105,6 +105,12 @@ class MeituAlbumTag(Base):
     tag_id = Column(Integer)
     created_at = Column(Float)
 
+class MeituAlbumModel(Base):
+    __tablename__ = "meitu_album_model"
+    id = Column(Integer, primary_key=True)
+    album_id = Column(Integer)
+    model_id = Column(Integer)
+    created_at = Column(Float)
 
 class MeituMedia(Base):
     __tablename__ = "meitu_media"

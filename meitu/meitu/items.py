@@ -78,3 +78,6 @@ class MeituMediaItem(scrapy.Item):
 
 class MeituTmpItem(MeituMediaItem):
     models = scrapy.Field()
+
+class MeituTmp1Item(MeituAblumItem):
+    models = scrapy.Field()
