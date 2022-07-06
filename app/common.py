@@ -3,7 +3,7 @@
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 
-from app.library.tools import date_filter, datetime_filter, COLORS
+from app.library.tools import date_filter, datetime_filter
 
 
 templates = Jinja2Templates(directory="templates/enoma")
@@ -22,3 +22,12 @@ MENU = {
     '/model': '模特库',
     '/organize': '写真机构',
 }
+
+COLORS = [
+    "primary",
+    "secondary",
+    "success",
+    "danger",
+    "warning",
+    "info"
+]

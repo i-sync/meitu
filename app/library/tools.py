@@ -7,18 +7,18 @@ import json
 import random
 import requests
 
-COLORS = [
-    "blue",
-    "indigo",
-    "purple",
-    "pink",
-    "red",
-    "orange",
-    "yellow",
-    "green",
-    "teal",
-    "cyan"
-]
+# COLORS = [
+#     "blue",
+#     "indigo",
+#     "purple",
+#     "pink",
+#     "red",
+#     "orange",
+#     "yellow",
+#     "green",
+#     "teal",
+#     "cyan"
+# ]
 
 
 def countdown(time_sec):
@@ -63,12 +63,12 @@ path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
 def get_proxy():
     with open(f"{path}/proxies.json", "r+", encoding="utf-8") as f:
         proxys = json.load(f)
-    
+
     if not len(proxys):
         return None
     for i in range(len(proxys)*2):
         index = random.randint(0, len(proxys) - 1)
-        proxy = proxys[index]        
+        proxy = proxys[index]
         host = proxy["ip"]
         port = proxy["port"]
         protocol = proxy["protocols"]
@@ -79,16 +79,16 @@ def get_proxy():
 
         #if text_proxy(proxies):
         return proxies
-    
+
     return None
 
 def test_all_proxy():
     with open(f"{path}/proxies.json", "r+", encoding="utf-8") as f:
         proxys = json.load(f)
-    
+
     if not len(proxys):
         return None
-    for proxy in proxys:    
+    for proxy in proxys:
         host = proxy["ip"]
         port = proxy["port"]
         protocol = proxy["protocols"]
@@ -98,19 +98,19 @@ def test_all_proxy():
         }
 
         test_proxy(proxies)
-    
+
     return None
 
 def gen_valid_proxy():
-    
+
     with open(f"{path}/proxies-all.json", "r+", encoding="utf-8") as f:
         proxys = json.load(f)
-    
+
     if not len(proxys):
         return None
 
     valid_list = []
-    for proxy in proxys:    
+    for proxy in proxys:
         host = proxy["ip"]
         port = proxy["port"]
         protocol = proxy["protocols"]

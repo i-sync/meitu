@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}{{data.album.title}}{% endblock %}
+
+{% block metadata %}
+
+<meta name="keywords" content="{{ data.album.meta_keywords }}" />
+<meta name="description" content="{{ data.album.description }}" />
+<meta name="og:url" content="{{ request.url }}" />
+<meta name="og:title" content="{{ data.album.title }}" />
+<meta name="og:description" content="{{ data.album.description  }}" />
+<meta name="og:image" content="{{data.album.cover }}" />
+<meta name="twitter:url" content="{{request.url}}" />
+<meta name="twitter:title" content="{{ data.album.title }}" />
+<meta name="twitter:description" content="{{ data.album.description }}" />
+<meta name="twitter:image" content="{{data.album.cover }}" />
+<meta name="twitter:card" content="summary_large_image" />
+
+{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+
+    <nav style="--bs-breadcrumb-divider: '>';" class="pl-2" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="pl-2">
+                <i class="bi bi-signpost-2-fill"></i>
+            </li>
+            <li class="px-2">当前位置: </li>
+            <li class="breadcrumb-item"><a href="/">首页</a></li>
+            <li class="breadcrumb-item"><a href="/beauty">美女图片</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/beauty/{{data.album.name}}">{{data.album.title}}</a></li>
+            <li class="breadcrumb-item active">第{{data.page.page_index}}页</li>
+        </ol>
+    </nav>
+
+    <div class="text-center">
+        <h1>{{data.album.title}}</h1>
+        <p>
+            {{data.album.description}}
+        <p>
+    </div>
+    <!-- <pre>{{data.album.meta_keywords}}</pre> -->
+    <div class=" mb-2">
+        <small class="text-muted">
+            <span>浏览:</span>
+            <span>
+                <!-- <script src="/plus/count/{{data.album.id}}" language="javascript"></script> -->
+            </span>
+            <span> / 日期:</span>
+            <span>{{data.album.origin_created_at|date}}</span>
+            <span> / 模特:</span>
+            <span>
+                {% if data.album.model_title %}
+                    <a href="/model/{{data.album.model_name}}" target="_blank">{{data.album.model_title}}</a>
+                {% else %}
+                    {{data.album.model_name}}
+                {% endif %}
+            </span>
+            <span> / 机构:</span>
+            <span>
+                {% if data.album.organize_title %}
+                    <a href="/organize/{{data.album.organize_name}}" target="_blank">{{data.album.organize_title}}</a>
+                {% else %}
+                    {{data.album.organize_name}}
+                {% endif %}
+            </span>
+        </small>
+    </div>
+
+    <div class="mb-2">
+        <small class="text-muted">
+        标签:
+        {% for tag in data.album.tags %}
+            <a href="/tags/{{tag.name}}" class="badge bg-{{tag.color}}" target="_blank">{{tag.title}}</a>
+        {% endfor %}
+        </small>
+    </div>
+
+    <div class="details_item row">
+        {% for item in data.album.images %}
+            <img src="/static/enoma/images/loading.gif" data-src="{{item.image_url}}" referrerpolicy="no-referrer" alt="{{data.album.title}}" class="py-1 lazy" />
+        {% endfor %}
+    </div>
+
+    {{ pagination_all('?page=', data.page) }}
+
+
+    <div class="row">
+        <hr/>
+        <h5>猜你喜欢</h5>
+    </div>
+    <div class="row gallery_inner_four">
+        {% for item in data.album.related %}
+        <div class="col-lg-3 col-md-4 col-6 gallery_item px-2">
+            <div class="gallery_post">
+                <div class="img">
+                    <a href="/beauty/{{item.name}}" target="_blank">
+                        <img src="/static/enoma/images/loading.gif" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                    </a>
+                </div>
+                <div class="gallery_content">
+                    <a href="/beauty/{{item.name}}" target="_blank">
+                        <h3>{{item.title}}</h3>
+                    </a>
+                    {% if item.model_title %}
+                        <a href="/model/{{item.model_name}}" target="_blank">
+                            <div class="g_tag">{{item.model_title}}</div>
+                        </a>
+                    {% else %}
+                        <div class="g_tag">{{item.model_name}}</div>
+                    {% endif %}
+                    <div class="g_tag">{{item.origin_created_at | date}}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    <div>
+</div>
+{% endblock%}

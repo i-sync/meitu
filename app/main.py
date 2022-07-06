@@ -28,7 +28,7 @@ from app.library.models import session_scope, MeituAlbum, MeituAlbumTag, MeituCa
 from app.routers import login, logs, beauty
 from app.routers.login import manager
 # from app.routers.beauty import beauty
-from app.library.tools import date_filter, datetime_filter, COLORS
+from app.library.tools import date_filter, datetime_filter
 from app.library.page import Page, PageAll, get_page_index
 from app.library.logger import logger
 from app.library.config import configs

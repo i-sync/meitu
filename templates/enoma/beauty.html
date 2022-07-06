@@ -4,6 +4,18 @@
 
 {% block metadata %}
 
+<meta name="keywords" content="{{ data.meta.keywords }}" />
+<meta name="description" content="{{ data.meta.description }}" />
+<meta name="og:url" content="{{ request.url }}" />
+<meta name="og:title" content="美女图片" />
+<meta name="og:description" content="{{ data.meta.description  }}" />
+<meta name="og:image" content="{{ data.albums[0].cover }}" />
+<meta name="twitter:url" content="{{request.url}}" />
+<meta name="twitter:title" content="美女图片" />
+<meta name="twitter:description" content="{{ data.meta.description }}" />
+<meta name="twitter:image" content="{{ data.albums[0].cover }}" />
+<meta name="twitter:card" content="summary_large_image" />
+
 {% endblock %}
 
 {% block head %}
@@ -12,6 +24,18 @@
 
 
 {% block content %}
+
+<nav style="--bs-breadcrumb-divider: '>'; padding-left: 0.5rem;" class="pl-2" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="pl-2">
+            <i class="bi bi-signpost-2-fill"></i>
+        </li>
+        <li class="px-2">当前位置: </li>
+        <li class="breadcrumb-item"><a href="/">首页</a></li>
+        <li class="breadcrumb-item" aria-current="page"><a href="/beauty">美女图片</a></li>
+        <li class="breadcrumb-item active">列表第{{data.page.page_index}}页</li>
+    </ol>
+</nav>
 
 <div class="container">
     <!-- <ul class="list-unstyled gallery_filter gallery_filter_two">
@@ -28,18 +52,22 @@
     <div class="col-lg-2 col-md-4 col-6 gallery_item px-2">
         <div class="gallery_post">
             <div class="img">
-                <img src="/static/enoma/images/loading.gif" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                <a href="/beauty/{{item.name}}" target="_blank">
+                    <img src="/static/enoma/images/loading.gif" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                </a>
             </div>
             <div class="gallery_content">
-                <a href="/beauty/{{item.name}}">
+                <a href="/beauty/{{item.name}}" target="_blank">
                     <h3>{{item.title}}</h3>
                 </a>
-                <a href="/model/{{item.model_name}}">
-                    <div class="g_tag">{{item.model_title}}</div>
-                </a>
-                <a href="#">
-                    <div class="g_tag">{{item.origin_created_at | date}}</div>
-                </a>
+                {% if item.model_title %}
+                    <a href="/model/{{item.model_name}}" target="_blank">
+                        <div class="g_tag">{{item.model_title}}</div>
+                    </a>
+                {% else %}
+                    <div class="g_tag">{{item.model_name}}</div>
+                {% endif %}
+                <div class="g_tag">{{item.origin_created_at | date}}</div>
             </div>
         </div>
     </div>
