@@ -1,16 +1,15 @@
 .f_logo img,
-.logo_info img{
+.logo_info img {
     width: 128px;
     height: 32px;
 }
 
-
-div.gallery_post_two div.img{
+div.gallery_post_two div.img {
     /* display: flex; */
     justify-content: center;
 }
 
-.gallery_inner_four .gallery_item .gallery_post .img{
+.gallery_inner_four .gallery_item .gallery_post .img {
     /* display: flex; */
     justify-content: center;
     border-radius: 0;
@@ -21,7 +20,27 @@ div.gallery_post_two div.img{
     /* height: 450px; */
 }
 
-.gallery_item .gallery_post .img img{
+.gallery_item .gallery_post .img img {
     height: 80% !important;
     object-fit: cover;
+}
+
+#navbarSupportedContent {
+    justify-content: right;
+}
+
+@media (min-width: 991px) {
+    #navbarSupportedContent form {
+        margin-left: 2rem;
+    }
+}
+@media (max-width: 991px) {
+    #navbarSupportedContent form {
+        padding: 0px 20px 20px 20px;
+        background-color: #fff;
+    }
+}
+
+.menu_toggle .hamburger span {
+    background: #fff;
 }

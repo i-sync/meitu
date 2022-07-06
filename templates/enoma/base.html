@@ -151,7 +151,7 @@
                                 <a href="#"><span class="__cf_email__" data-cfemail="771418190316140337001601125914181a">[email&#160;protected]</span></a>
                             </div> -->
                         </div>
-                        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="menu_toggle">
                                 <span class="hamburger">
                                     <span></span>
@@ -167,7 +167,7 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ml-auto menu">
                                 {% for item in data.menu %}
-                                    <li class="nav-item dropdown submenu">
+                                    <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="{{item}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{data.menu[item]}} </a>
 
                                     </li>
@@ -175,10 +175,10 @@
                             </ul>
 
 
-                            <!-- <form class="d-flex" action="/search" methods="get">
-                                <input class="form-control me-2" type="search" name="s" placeholder="Search" aria-label="Search" />
+                            <form class="d-flex" action="/search" methods="get">
+                                <input class="form-control me-2 w-auto" type="search" name="s" placeholder="Search" aria-label="Search" />
                                 <button class="btn btn-outline-success" type="submit">搜索</button>
-                            </form> -->
+                            </form>
                         </div>
                         <div class="burger_menu side_menu">
                             <div class="dot_icon">
