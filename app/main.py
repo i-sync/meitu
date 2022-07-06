@@ -309,16 +309,29 @@ async def add_process_time_header(request: Request, call_next):
 #     }
 #     return templates.TemplateResponse("article.html", {"request": request, "data": data})
 
-# @app.get("/plus/count/{id}", response_class=HTMLResponse)
-# async def count(id, request: Request):
-#     if not id or not id.isdigit():
-#         return "document.write('0');"
-#     view_count = 0
-#     with session_scope() as session:
-#         album = session.query(XiurenAlbum).filter(XiurenAlbum.id == int(id), XiurenAlbum.is_enabled == 1).first()
-#         if album:
-#             album.view_count += 1
-#             view_count = album.view_count
-#             session.commit()
-#     return f"document.write('{view_count}');"
+@app.get("/album/plus/count/{id}", response_class=HTMLResponse)
+async def count(id, request: Request):
+    if not id or not id.isdigit():
+        return "document.write('0');"
+    view_count = 0
+    with session_scope() as session:
+        album = session.query(MeituAlbum).filter(MeituAlbum.id == int(id), MeituAlbum.is_enabled == 1).first()
+        if album:
+            album.view_count += 1
+            view_count = album.view_count
+            session.commit()
+    return f"document.write('{view_count}');"
+
+@app.get("/media/plus/count/{id}", response_class=HTMLResponse)
+async def count(id, request: Request):
+    if not id or not id.isdigit():
+        return "document.write('0');"
+    view_count = 0
+    with session_scope() as session:
+        media = session.query(MeituMedia).filter(MeituMedia.id == int(id), MeituMedia.is_enabled == 1).first()
+        if media:
+            media.view_count += 1
+            view_count = media.view_count
+            session.commit()
+    return f"document.write('{view_count}');"
 

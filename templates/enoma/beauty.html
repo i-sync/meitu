@@ -1,8 +1,4 @@
-{% extends 'base.html' %}
-
-{% block title %}美女图片{% endblock %}
-
-{% block metadata %}
+{% extends 'base.html' %} {% block title %}美女图片{% endblock %} {% block metadata %}
 
 <meta name="keywords" content="{{ data.meta.keywords }}" />
 <meta name="description" content="{{ data.meta.description }}" />
@@ -16,21 +12,14 @@
 <meta name="twitter:image" content="{{ data.albums[0].cover }}" />
 <meta name="twitter:card" content="summary_large_image" />
 
-{% endblock %}
+{% endblock %} {% block head %} {% endblock %} {% block content %}
 
-{% block head %}
-
-{% endblock %}
-
-
-{% block content %}
-
-<nav style="--bs-breadcrumb-divider: '>'; padding-left: 0.5rem;" class="pl-2" aria-label="breadcrumb">
+<nav style="--bs-breadcrumb-divider: '>'; padding-left: 0.5rem" class="pl-2" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="pl-2">
             <i class="bi bi-signpost-2-fill"></i>
         </li>
-        <li class="px-2">当前位置: </li>
+        <li class="px-2">当前位置:</li>
         <li class="breadcrumb-item"><a href="/">首页</a></li>
         <li class="breadcrumb-item" aria-current="page"><a href="/beauty">美女图片</a></li>
         <li class="breadcrumb-item active">列表第{{data.page.page_index}}页</li>
@@ -47,7 +36,6 @@
     </ul> -->
 </div>
 <div id="gallery" class="row gallery_inner_four mx-0">
-
     {% for item in data.albums %}
     <div class="col-lg-2 col-md-4 col-6 gallery_item px-2">
         <div class="gallery_post">
@@ -61,19 +49,26 @@
                     <h3>{{item.title}}</h3>
                 </a>
                 {% if item.model_title %}
-                    <a href="/model/{{item.model_name}}" target="_blank">
-                        <div class="g_tag">{{item.model_title}}</div>
-                    </a>
+                <a href="/model/{{item.model_name}}" target="_blank">
+                    <div class="g_tag"><i class="bi bi-person-circle"></i> {{item.model_title}}</div>
+                </a>
                 {% else %}
-                    <div class="g_tag">{{item.model_name}}</div>
+                <div class="g_tag"><i class="bi bi-person-circle"></i> {{item.model_name}}</div>
                 {% endif %}
-                <div class="g_tag">{{item.origin_created_at | date}}</div>
+                <div class="row">
+                    <div class="g_tag col">
+                        <i class="bi bi-calendar-date"></i>
+                        {{item.origin_created_at | date}}
+                    </div>
+                    <div class="g_tag col text-end">
+                        <i class="bi bi-eye"></i>
+                        {{item.view_count}}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     {% endfor %}
 </div>
 
-{{ pagination('?page=', data.page) }}
-
-{% endblock%}
+{{ pagination('?page=', data.page) }} {% endblock%}
