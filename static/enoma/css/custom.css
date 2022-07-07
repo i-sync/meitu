@@ -16,15 +16,12 @@ div.gallery_post_two div.img {
     /* height: 60%; */
 }
 
-.gallery_item {
-    /* height: 450px; */
-}
-
 .gallery_item .gallery_post .img img {
     height: 80% !important;
     object-fit: cover;
 }
 
+/* navbar css start */
 #navbarSupportedContent {
     justify-content: right;
 }
@@ -39,8 +36,21 @@ div.gallery_post_two div.img {
         padding: 0px 20px 20px 20px;
         background-color: #fff;
     }
+
+    .header_area form button {
+        color: #101010;
+        border-color:#101010;
+    }
 }
 
 .menu_toggle .hamburger span {
     background: #fff;
 }
+
+
+.navbar_fixed.header_area form button {
+    color: #101010;
+    border-color:#101010;
+}
+
+/* navbar css end */
