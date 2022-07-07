@@ -12,28 +12,64 @@
 <meta name="twitter:image" content="{{ data.albums[0].cover }}" />
 <meta name="twitter:card" content="summary_large_image" />
 
-{% endblock %} {% block head %} {% endblock %} {% block content %}
+{% endblock %}
 
-<nav style="--bs-breadcrumb-divider: '>'; padding-left: 0.5rem" class="pl-2" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="pl-2">
-            <i class="bi bi-signpost-2-fill"></i>
-        </li>
-        <li class="px-2">当前位置:</li>
-        <li class="breadcrumb-item"><a href="/">首页</a></li>
-        <li class="breadcrumb-item" aria-current="page"><a href="/beauty">美女图片</a></li>
-        <li class="breadcrumb-item active">列表第{{data.page.page_index}}页</li>
-    </ol>
-</nav>
+{% block head %}
 
-<div class="container">
-    <!-- <ul class="list-unstyled gallery_filter gallery_filter_two">
-        <li class="active" data-filter="*">All Projects</li>
-        <li data-filter=".design">Design</li>
-        <li data-filter=".market">Marketing</li>
-        <li data-filter=".develop">Development</li>
-        <li data-filter=".br">Branding</li>
-    </ul> -->
+
+
+{% endblock %}
+
+{% block content %}
+
+
+<div id="main-carousel" class="carousel slide mb-3" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        {% for item in data.tops %}
+        <button type="button" data-bs-target="#main-carousel" data-bs-slide-to="{{loop.index0}}" class="{% if loop.index0 == 0 %} active {% endif %} " aria-current="true" aria-label="{{item.title}}"></button>
+        {% endfor %}
+    </div>
+    <div class="carousel-inner">
+        {% for item in data.tops %}
+        <div class="carousel-item {% if loop.index0 == 0 %} active {% endif %} ">
+            <a href="/beauty/{{item.name}}" target="_blank" alt="{{item.title}}" title="{{item.title}}">
+                <img src="/static/enoma/images/loading.gif" data-src="{{item.image_url}}" class="d-block lazy" alt="{{item.title}}" referrerpolicy="no-referrer" />
+            </a>
+            <div class="carousel-caption d-block d-md-block">
+                <h5>{% if item.model_title %} {{item.model_title}} {% else %} {{item.model_name}} {% endif %}</h5>
+                <p>{{item.title}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#main-carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#main-carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+
+<div class="row px-2 div-nav">
+    <nav class="col-md-6 col-sm-12 pl-2" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="pl-2">
+                <i class="bi bi-signpost-2-fill"></i>
+            </li>
+            <li class="px-2">当前位置:</li>
+            <li class="breadcrumb-item"><a href="/">首页</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/beauty">美女图片</a></li>
+            <li class="breadcrumb-item active">列表第{{data.page.page_index}}页</li>
+        </ol>
+    </nav>
+    <div id="order" class="col-md-6 col-sm-12 text-end">
+        <span>排序方式: </span>
+        <a v-bind:class="{'link-secondary': order_by == 'new'}" href="/beauty?order=new">最近更新</a>
+        <a v-bind:class="{'link-secondary': order_by == 'hot'}" href="/beauty?order=hot">热门排行</a>
+    </div>
 </div>
 <div id="gallery" class="row gallery_inner_four mx-0">
     {% for item in data.albums %}
@@ -74,3 +110,29 @@
 <div class="d-flex justify-content-center">
     {{ pagination('?page=', data.page) }} {% endblock%}
 </div>
+
+{% block bodyscript %}
+    <script>
+        $(function(){
+            Vue.createApp({
+                compilerOptions: {
+                        delimiters: ["${", "}"]
+                },
+                data : function() {
+                    return {
+                        order_by: getQueryString('order') || "new"
+                    }
+                },
+                methods:{
+                    search: function(){
+                        if(this.s)
+                        {
+                            redirect_param("/search", {page: 1, s: this.s});
+                        }
+                    }
+                }
+            }).mount("#order");
+        })
+    </script>
+
+{% endblock %}

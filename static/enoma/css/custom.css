@@ -54,3 +54,45 @@ div.gallery_post_two div.img {
 }
 
 /* navbar css end */
+
+/* carousel */
+.carousel-inner img {
+    /* height: 100%; */
+    width: 100%;
+    object-fit: cover;
+}
+
+.carousel-inner .carousel-caption h5{
+    color: #fff;
+}
+
+@media (min-width: 991px){
+    .carousel-inner img {
+        height: 800px;
+    }
+}
+
+@media (max-width: 991px){
+    .carousel-inner img {
+        height: 400px;
+    }
+}
+
+/* carousel end  */
+
+/* breadcrumb */
+#order a{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+@media (max-width: 991px) {
+    nav ol.breadcrumb {
+        margin-bottom: auto;
+    }
+    div.div-nav{
+        padding-bottom: 0.5rem;
+    }
+}
+
+/* breadcrumb end */

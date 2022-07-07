@@ -20,7 +20,7 @@ from app.library.config import toDict, configs
 router = APIRouter()
 
 @router.get('/beauty', response_class=HTMLResponse)
-async def beauty(request: Request, page = "1", order = "hot"):
+async def beauty(request: Request, page = "1", order = "new"):
     page_index = get_page_index(page)
 
     with session_scope() as session:
@@ -38,14 +38,21 @@ async def beauty(request: Request, page = "1", order = "hot"):
         order_by = "view_count" if order == "hot" else "origin_created_at"
         sql = f"select meitu_album.*, meitu_model.title as model_title from meitu_album left join meitu_model on meitu_album.model_name = meitu_model.name where meitu_album.is_enabled = 1 order by meitu_album.{order_by} desc limit {page.limit} offset {page.offset}"
         albums = session.execute(sql).fetchall()
-        # tops = session.query(XiurenAlbum).filter(MeituAlbum.category_name == 'beauty', MeituAlbum.is_enabled == 1).order_by(desc(XiurenAlbum.view_count)).limit(10).all()
+        # tops = session.query(MeituAlbum).filter(MeituAlbum.category_name == 'beauty', MeituAlbum.is_enabled == 1).order_by(desc(MeituAlbum.view_count)).limit(10).all()
 
+        sql = """select meitu_album.*, meitu_model.title as model_title,
+            (select meitu_image.image_url from meitu_image where meitu_image.album_id = meitu_album.id order by meitu_image.id limit 1) as image_url
+            from meitu_album
+            left join meitu_model on meitu_album.model_name = meitu_model.name
+            where meitu_album.is_enabled = 1 order by meitu_album.view_count desc limit 10"""
+        tops = session.execute(sql).fetchall()
 
     data ={
         "menu": MENU,
         "meta": configs.meta,
         "page": page,
-        "albums": albums
+        "albums": albums,
+        "tops": tops
     }
     return templates.TemplateResponse("beauty.html", {"request": request, "data": data})
 
