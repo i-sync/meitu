@@ -25,7 +25,7 @@ from slowapi import Limiter
 from slowapi.util import get_remote_address
 
 from app.library.models import session_scope, MeituAlbum, MeituAlbumTag, MeituCategory, MeituContent, MeituImage, MeituModel, MeituOrganize, MeituTag
-from app.routers import login, logs, beauty
+from app.routers import login, logs, beauty, handsome
 from app.routers.login import manager
 # from app.routers.beauty import beauty
 from app.library.tools import date_filter, datetime_filter
@@ -37,6 +37,7 @@ app = FastAPI()
 app.include_router(login.router)
 app.include_router(logs.router)
 app.include_router(beauty.router)
+app.include_router(handsome.router)
 
 
 

@@ -19,24 +19,23 @@ from app.library.config import toDict, configs
 
 router = APIRouter()
 
-@router.get('/beauty', response_class=HTMLResponse)
-async def beauty(request: Request, page = "1", order = "new"):
+@router.get('/handsome', response_class=HTMLResponse)
+async def handsome(request: Request, page = "1", order = "new"):
     page_index = get_page_index(page)
 
     with session_scope() as session:
-        rows = session.query(func.count(MeituAlbum.id)).filter(MeituAlbum.category_name == 'beauty', MeituAlbum.is_enabled == 1).scalar()
+        rows = session.query(func.count(MeituAlbum.id)).filter(MeituAlbum.category_name == 'handsome', MeituAlbum.is_enabled == 1).scalar()
         page = Page(rows, page_index)
 
         order_by = "view_count" if order == "hot" else "origin_created_at"
-        sql = f"select meitu_album.*, meitu_model.title as model_title from meitu_album left join meitu_model on meitu_album.model_name = meitu_model.name where meitu_album.category_name = 'beauty' and meitu_album.is_enabled = 1 order by meitu_album.{order_by} desc limit {page.limit} offset {page.offset}"
+        sql = f"select meitu_album.*, meitu_model.title as model_title from meitu_album left join meitu_model on meitu_album.model_name = meitu_model.name where meitu_album.category_name = 'handsome' and meitu_album.is_enabled = 1 order by meitu_album.{order_by} desc limit {page.limit} offset {page.offset}"
         albums = session.execute(sql).fetchall()
-        # tops = session.query(MeituAlbum).filter(MeituAlbum.category_name == 'beauty', MeituAlbum.is_enabled == 1).order_by(desc(MeituAlbum.view_count)).limit(10).all()
 
         sql = """select meitu_album.*, meitu_model.title as model_title,
             (select meitu_image.image_url from meitu_image where meitu_image.album_id = meitu_album.id order by meitu_image.id limit 1) as image_url
             from meitu_album
             left join meitu_model on meitu_album.model_name = meitu_model.name
-            where meitu_album.category_name = 'beauty' and meitu_album.is_enabled = 1 order by meitu_album.view_count desc limit 10"""
+            where meitu_album.category_name = 'handsome' and meitu_album.is_enabled = 1 order by meitu_album.view_count desc limit 10"""
         tops = session.execute(sql).fetchall()
 
     data ={
@@ -46,26 +45,25 @@ async def beauty(request: Request, page = "1", order = "new"):
         "albums": albums,
         "tops": tops
     }
-    return templates.TemplateResponse("beauty.html", {"request": request, "data": data})
+    return templates.TemplateResponse("handsome.html", {"request": request, "data": data})
 
-@router.get('/beauty/{name}', response_class=HTMLResponse)
-async def beauty_detail(request: Request, name, page="1"):
+@router.get('/handsome/{name}', response_class=HTMLResponse)
+async def handsome_detail(request: Request, name, page="1"):
     if not name:
-        return RedirectResponse("/beauty")
+        return RedirectResponse("/handsome")
 
     page_index = get_page_index(page)
     with session_scope() as session:
         # album = session.query(MeituAlbum).filter(MeituAlbum.name == name, MeituAlbum.is_enabled == 1).first()
-        sql = text("""select meitu_album.*, meitu_model.title as model_title, meitu_organize.title as organize_title from meitu_album
+        sql = text("""select meitu_album.*, meitu_model.title as model_title from meitu_album
                     left join meitu_model on meitu_album.model_name = meitu_model.name
-                    left join meitu_organize on meitu_album.organize_name = meitu_organize.name
-                    where meitu_album.category_name = 'beauty' and meitu_album.name = :name and meitu_album.is_enabled = 1""")
+                    where meitu_album.category_name = 'handsome' and meitu_album.name = :name and meitu_album.is_enabled = 1""")
         album = session.execute(sql, {'name':name}).fetchone()
         if not album:
             return RedirectResponse("/404")
         album = toDict(album._asdict())
         album.tags = []
-        album.keywords = [album.model_title if album.model_title else album.model_name, album.organize_title if album.organize_title else album.organize_name,]
+        album.keywords = [album.model_title if album.model_title else album.model_name]
 
         sql = text("select meitu_tag.* from meitu_album_tag inner join meitu_tag on meitu_album_tag.tag_id = meitu_tag.id where meitu_album_tag.album_id=:album_id")
         tags = session.execute(sql, {'album_id': album.id}).fetchall()
@@ -88,7 +86,7 @@ async def beauty_detail(request: Request, name, page="1"):
             ON T1.tag_id = T2.tag_id AND T1.album_id != T2.album_id
             JOIN meitu_album album ON T2.album_id = album.id
             LEFT JOIN meitu_model model ON album.model_name = model.name
-            WHERE album.category_name = 'beauty' AND T1.album_id = :album_id
+            WHERE album.category_name = 'handsome' AND T1.album_id = :album_id
             GROUP BY T2.album_id
             ORDER BY tag_count DESC
             limit 20;""")
@@ -103,4 +101,4 @@ async def beauty_detail(request: Request, name, page="1"):
         "page": page,
         "album": album
     }
-    return templates.TemplateResponse("beauty-detail.html", {"request": request, "data": data})
+    return templates.TemplateResponse("handsome-detail.html", {"request": request, "data": data})
