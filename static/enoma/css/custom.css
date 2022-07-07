@@ -41,6 +41,10 @@ div.gallery_post_two div.img {
         color: #101010;
         border-color:#101010;
     }
+
+    .header_area form input.form-control {
+        max-width: 65%;
+    }
 }
 
 .menu_toggle .hamburger span {
