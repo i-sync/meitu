@@ -24,8 +24,8 @@ from slowapi import Limiter
 #from slowapi import _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 
-from app.library.models import session_scope, MeituAlbum, MeituAlbumTag, MeituCategory, MeituContent, MeituImage, MeituModel, MeituOrganize, MeituTag
-from app.routers import login, logs, beauty, handsome
+from app.library.models import session_scope, MeituAlbum, MeituMedia, MeituAlbumTag, MeituCategory, MeituContent, MeituImage, MeituModel, MeituOrganize, MeituTag
+from app.routers import login, logs, beauty, handsome, news
 from app.routers.login import manager
 # from app.routers.beauty import beauty
 from app.library.tools import date_filter, datetime_filter
@@ -38,6 +38,7 @@ app.include_router(login.router)
 app.include_router(logs.router)
 app.include_router(beauty.router)
 app.include_router(handsome.router)
+app.include_router(news.router)
 
 
 
@@ -83,8 +84,9 @@ async def add_user_agent_parse(request: Request, call_next):
     fastapi middleware for user_agent parse
     reference: https://stackoverflow.com/questions/64602770/how-can-i-set-attribute-to-request-object-in-fastapi-from-middleware
     """
-    user_agent = parse(request.headers.get("user-agent"))
-    request.state.user_agent = user_agent
+    if not request.url.path.startswith('/static') and request.headers.get("user-agent"):
+        user_agent = parse(request.headers.get("user-agent"))
+        request.state.user_agent = user_agent
     return await call_next(request)
 
 @app.middleware("http")
@@ -93,11 +95,13 @@ async def add_process_time_header(request: Request, call_next):
     fastapi middleware add process time for response header
     reference: https://fastapi.tiangolo.com/tutorial/middleware/
     """
-    start_time = time.time()
-    response = await call_next(request)
-    process_time = time.time() - start_time
-    response.headers["X-Process-Time"] = str(process_time)
-    return response
+    if not request.url.path.startswith('/static'):
+        start_time = time.time()
+        response = await call_next(request)
+        process_time = time.time() - start_time
+        response.headers["X-Process-Time"] = str(process_time)
+        return response
+    return await call_next(request)
 
 # def check_login(request: Request):
 #     user = request.state.user
