@@ -18,8 +18,21 @@ div.gallery_post_two div.img {
 
 .gallery_item .gallery_post .img img {
     /* height: 80% !important; */
-    aspect-ratio: 1 / 1.5;
     object-fit: cover;
+}
+
+@media (min-width: 991px){
+    .gallery_item .gallery_post .img img {
+        /* height: 80% !important; */
+        aspect-ratio: 1 / 1.3;
+    }
+}
+
+@media (max-width: 991px){
+    .gallery_item .gallery_post .img img {
+        /* height: 80% !important; */
+        aspect-ratio: 1 / 1.5;
+    }
 }
 
 /* navbar css start */
@@ -79,7 +92,7 @@ div.gallery_post_two div.img {
 
 @media (max-width: 991px){
     .carousel-inner img {
-        height: 400px;
+        height: 500px;
     }
 }
 

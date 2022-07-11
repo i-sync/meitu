@@ -22,7 +22,7 @@
 
 {% block content %}
 
-
+{% if request.state.user_agent.is_mobile %}
 <div id="main-carousel" class="carousel slide mb-3" data-bs-ride="carousel">
     <div class="carousel-indicators">
         {% for item in data.tops %}
@@ -51,7 +51,7 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
-
+{% endif %}
 
 <div class="row px-2 div-nav">
     <nav class="col-md-6 col-sm-12 pl-2" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
