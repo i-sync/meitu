@@ -114,3 +114,21 @@ div.gallery_post_two div.img {
 }
 
 /* breadcrumb end */
+
+/* news street image  */
+.news-body img{
+    width: 100%;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+/* news street image end */
+
+/* detail page right part */
+.gallery_item .gallery_post .gallery_content
+{
+    padding: 10px 0 0;
+}
+.right-part .gallery_item{
+    margin-bottom: 20px;
+}
+/* detail page right part end */

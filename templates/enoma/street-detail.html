@@ -29,9 +29,9 @@
 
     <div class="text-center">
         <h1>{{data.media.title}}</h1>
-        <p>{{data.media.description}}</p>
-
-        <p></p>
+        {% if data.media.description %}
+            <p>{{data.media.description}}</p>
+        {% endif %}
     </div>
 
     <!-- <pre>{{data.media.meta_keywords}}</pre> -->
@@ -64,10 +64,77 @@
     </div>
     {% endif %}
 
-    <div class="details_item row">
-        {% for item in data.media.contents %}
-            {{item.content | safe }}
-        {% endfor %}
+
+    <div class="row">
+        <div class="col-sm-12 col-md-8 col-lg-8">
+            {% for item in data.media.contents %}
+                {{item.content | safe }}
+            {% endfor %}
+        </div>
+
+        {% if not request.state.user_agent.is_mobile %}
+            <div class="col-md-4 col-lg-4 row h-100 right-part ">
+                <div>
+                    <h5><b>月度排行榜</b></h5>
+                </div>
+                {% for item in data.tops %}
+                <div class="col-lg-6 col-md-6 col-6 gallery_item">
+                    <div class="gallery_post">
+                        <div class="img">
+                            <a href="/street/{{item.name}}" target="_blank">
+                                <img src="/static/enoma/images/loading.gif" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                            </a>
+                        </div>
+                        <div class="gallery_content">
+                            <a href="/street/{{item.name}}" target="_blank">
+                                <h6>{{item.title}}</h6>
+                            </a>
+                            {#<div class="row">
+                                <div class="g_tag col">
+                                    <i class="bi bi-calendar-date"></i>
+                                    {{item.origin_created_at | date}}
+                                </div>
+                                <div class="g_tag col text-end">
+                                    <i class="bi bi-eye"></i>
+                                    {{item.view_count}}
+                                </div>
+                            </div>#}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div>
+                    <h5><b>最近更新</b></h5>
+                </div>
+                {% for item in data.latest %}
+                <div class="col-lg-6 col-md-6 col-6 gallery_item">
+                    <div class="gallery_post">
+                        <div class="img">
+                            <a href="/street/{{item.name}}" target="_blank">
+                                <img src="/static/enoma/images/loading.gif" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                            </a>
+                        </div>
+                        <div class="gallery_content">
+                            <a href="/street/{{item.name}}" target="_blank">
+                                <h6>{{item.title}}</h6>
+                            </a>
+                            {#<div class="row">
+                                <div class="g_tag col">
+                                    <i class="bi bi-calendar-date"></i>
+                                    {{item.origin_created_at | date}}
+                                </div>
+                                <div class="g_tag col text-end">
+                                    <i class="bi bi-eye"></i>
+                                    {{item.view_count}}
+                                </div>
+                            </div>#}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 
     {% if data.page.page_count > 1 %}

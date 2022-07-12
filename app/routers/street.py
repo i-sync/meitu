@@ -31,7 +31,11 @@ async def street(request: Request, page = "1", order = "new"):
         order_by = "view_count" if order == "hot" else "origin_created_at"
         sql = f"select * from meitu_media where meitu_media.category_name = 'street' and meitu_media.is_enabled = 1 order by meitu_media.{order_by} desc limit {page.limit} offset {page.offset}"
         medias = session.execute(sql).fetchall()
-        tops = session.query(MeituMedia).filter(MeituMedia.category_name == 'street', MeituMedia.is_enabled == 1).order_by(desc(MeituMedia.view_count)).limit(10).all()
+
+        if request.state.user_agent.is_mobile:
+            tops = session.query(MeituMedia).filter(MeituMedia.category_name == 'street', MeituMedia.is_enabled == 1).order_by(desc(MeituMedia.view_count)).limit(10).all()
+        else:
+            tops = []
 
     data ={
         "menu": MENU,
@@ -97,11 +101,19 @@ async def street_detail(request: Request, name, page="1"):
         else:
             media.related = session.query(MeituMedia).filter(MeituMedia.category_name == 'street', MeituMedia.is_enabled == 1).limit(20).all()
 
+        if not request.state.user_agent.is_mobile:
+            tops = session.query(MeituMedia).filter(MeituMedia.category_name == 'street', MeituMedia.id != media.id, MeituMedia.is_enabled == 1).order_by(desc(MeituMedia.view_count)).limit(10).all()
+            latest = session.query(MeituMedia).filter(MeituMedia.category_name == 'street', MeituMedia.id != media.id, MeituMedia.is_enabled == 1).order_by(desc(MeituMedia.origin_created_at)).limit(10).all()
+        else:
+            tops = []
+            latest = []
     data = {
         "menu": MENU,
         "meta": configs.meta,
         "page": page,
-        "media": media
+        "media": media,
+        "tops": tops,
+        "latest": latest
     }
 
     return templates.TemplateResponse("street-detail.html", {"request": request, "data": data})
