@@ -21,6 +21,11 @@ div.gallery_post_two div.img {
     object-fit: cover;
 }
 
+/* model ratio css */
+.gallery-models .gallery_item .gallery_post .img img {
+    aspect-ratio: 1 / 1;
+}
+
 @media (min-width: 991px){
     .gallery_item .gallery_post .img img {
         /* height: 80% !important; */
@@ -34,6 +39,8 @@ div.gallery_post_two div.img {
         aspect-ratio: 1 / 1.5;
     }
 }
+
+
 
 /* navbar css start */
 #navbarSupportedContent {
