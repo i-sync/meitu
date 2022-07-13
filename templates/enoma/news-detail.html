@@ -1,4 +1,11 @@
-{% extends 'base.html' %} {% block title %}{{data.media.title}}{% endblock %} {% block metadata %}
+{% extends 'base.html' %}
+
+{% block title %}
+    {{data.media.title}}
+{% endblock %}
+
+
+{% block metadata %}
 
 <meta name="keywords" content="{{ data.media.meta_keywords }}" />
 <meta name="description" content="{{ data.media.description }}" />
@@ -12,7 +19,11 @@
 <meta name="twitter:image" content="{{data.media.cover }}" />
 <meta name="twitter:card" content="summary_large_image" />
 
-{% endblock %} {% block head %} {% endblock %} {% block content %}
+{% endblock %}
+
+{% block head %} {% endblock %}
+
+{% block content %}
 <div class="container">
     <nav style="--bs-breadcrumb-divider: '>'" class="pl-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -34,7 +45,6 @@
         {% endif %}
     </div>
 
-    <!-- <pre>{{data.media.meta_keywords}}</pre> -->
     <div class="mb-2">
         <small class="text-muted">
             <span>浏览:</span>
@@ -172,7 +182,7 @@
             </div>
         </div>
         {% endfor %}
-        <div></div>
-        {% endblock%}
     </div>
 </div>
+
+{% endblock %}

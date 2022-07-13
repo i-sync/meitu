@@ -1,18 +1,22 @@
-{% extends 'base.html' %} {% block title %}{{data.media.title}}{% endblock %} {% block metadata %}
+{% extends 'base.html' %} {% block title %}{{data.model.title}}{% endblock %} {% block metadata %}
 
-<meta name="keywords" content="{{ data.media.meta_keywords }}" />
-<meta name="description" content="{{ data.media.description }}" />
+<meta name="keywords" content="{{ data.model.meta_keywords }}" />
+<meta name="description" content="{{ data.model.description }}" />
 <meta name="og:url" content="{{ request.url }}" />
-<meta name="og:title" content="{{ data.media.title }}" />
-<meta name="og:description" content="{{ data.media.description  }}" />
-<meta name="og:image" content="{{data.media.cover }}" />
+<meta name="og:title" content="{{ data.model.title }}" />
+<meta name="og:description" content="{{ data.model.description  }}" />
+<meta name="og:image" content="{{data.model.cover }}" />
 <meta name="twitter:url" content="{{request.url}}" />
-<meta name="twitter:title" content="{{ data.media.title }}" />
-<meta name="twitter:description" content="{{ data.media.description }}" />
-<meta name="twitter:image" content="{{data.media.cover }}" />
+<meta name="twitter:title" content="{{ data.model.title }}" />
+<meta name="twitter:description" content="{{ data.model.description }}" />
+<meta name="twitter:image" content="{{data.model.cover }}" />
 <meta name="twitter:card" content="summary_large_image" />
 
-{% endblock %} {% block head %} {% endblock %} {% block content %}
+{% endblock %}
+
+{% block head %} {% endblock %}
+
+{% block content %}
 <div class="container">
     <nav style="--bs-breadcrumb-divider: '>'" class="pl-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -21,143 +25,49 @@
             </li>
             <li class="px-2">当前位置:</li>
             <li class="breadcrumb-item"><a href="/">首页</a></li>
-            <li class="breadcrumb-item"><a href="/news">娱报</a></li>
-            <li class="breadcrumb-item" aria-current="page"><a href="/news/{{data.media.name}}">{{data.media.title}}</a></li>
+            <li class="breadcrumb-item"><a href="/model">模特明星</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/model/{{data.model.name}}">{{data.model.title}}</a></li>
             <li class="breadcrumb-item active">第{{data.page.page_index}}页</li>
         </ol>
     </nav>
 
-    <div class="text-center">
-        <h1>{{data.media.title}}</h1>
-        {% if data.media.description %}
-            <p>{{data.media.description}}</p>
-        {% endif %}
-    </div>
-
-    <!-- <pre>{{data.media.meta_keywords}}</pre> -->
-    <div class="mb-2">
-        <small class="text-muted">
-            <span>浏览:</span>
-            <span>
-                <script src="/media/plus/count/{{data.media.id}}" language="javascript"></script>
-            </span>
-            <span> / 日期:</span>
-            <span>{{data.media.origin_created_at|date}}</span>
-            {% if data.media.models %}
-                <span> / 模特:</span>
-                {% for model in data.media.models %}
-                    <span>
-                        <a href="/model/{{model.name}}" target="_blank">{{model.title}}</a>
-                    </span>
-                {% endfor %}
-            {% endif%}
-        </small>
-    </div>
-
-    {% if data.media.tags %}
-    <div class="mb-2">
-        <small class="text-muted">
-            标签: {% for tag in data.media.tags %}
-            <a href="/tags/{{tag.name}}" class="badge bg-{{tag.color}}" target="_blank">{{tag.title}}</a>
-            {% endfor %}
-        </small>
-    </div>
-    {% endif %}
-
-
-    <div class="row">
-        <div class="col-sm-12 col-md-8 col-lg-8">
-            {% for item in data.media.contents %}
-                {{item.content | safe }}
-            {% endfor %}
-        </div>
-
-        {% if not request.state.user_agent.is_mobile %}
-            <div class="col-md-4 col-lg-4 row h-100 right-part ">
-                <div>
-                    <h5><b>月度排行榜</b></h5>
-                </div>
-                {% for item in data.tops %}
-                <div class="col-lg-6 col-md-6 col-6 gallery_item">
-                    <div class="gallery_post">
-                        <div class="img">
-                            <a href="/street/{{item.name}}" target="_blank">
-                                <img src="/static/enoma/images/loading.gif" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
-                            </a>
-                        </div>
-                        <div class="gallery_content">
-                            <a href="/street/{{item.name}}" target="_blank">
-                                <h6>{{item.title}}</h6>
-                            </a>
-                            {#<div class="row">
-                                <div class="g_tag col">
-                                    <i class="bi bi-calendar-date"></i>
-                                    {{item.origin_created_at | date}}
-                                </div>
-                                <div class="g_tag col text-end">
-                                    <i class="bi bi-eye"></i>
-                                    {{item.view_count}}
-                                </div>
-                            </div>#}
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-
-                <div>
-                    <h5><b>最近更新</b></h5>
-                </div>
-                {% for item in data.latest %}
-                <div class="col-lg-6 col-md-6 col-6 gallery_item">
-                    <div class="gallery_post">
-                        <div class="img">
-                            <a href="/street/{{item.name}}" target="_blank">
-                                <img src="/static/enoma/images/loading.gif" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
-                            </a>
-                        </div>
-                        <div class="gallery_content">
-                            <a href="/street/{{item.name}}" target="_blank">
-                                <h6>{{item.title}}</h6>
-                            </a>
-                            {#<div class="row">
-                                <div class="g_tag col">
-                                    <i class="bi bi-calendar-date"></i>
-                                    {{item.origin_created_at | date}}
-                                </div>
-                                <div class="g_tag col text-end">
-                                    <i class="bi bi-eye"></i>
-                                    {{item.view_count}}
-                                </div>
-                            </div>#}
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+    <div class="card flex-row flex-wrap my-3">
+        <div class="row g-0">
+            <div class="col-auto col-lg-3 col-md-3 col-sm-12">
+                <img src="{{data.model.cover}}"  referrerpolicy="no-referrer"  alt="{{data.model.title}}" />
             </div>
-        {% endif %}
+            <div class="col-auto col-lg-9 col-md-9 col-sm-12">
+                <div class="card-body">
+                    <h1 class="card-title">{{data.model.title}}</h1>
+                    <p class="card-text">{{data.model.summary_info | safe}}</p>
+                    {% if data.model.description %}
+                        <p class="card-text">{{data.model.description}}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 
-    {% if data.page.page_count > 1 %}
-        {{ pagination_all('?page=', data.page) }}
-    {% endif %}
-
-    <div class="row">
-        <hr />
-        <h5>猜你喜欢</h5>
-    </div>
-    <div class="row gallery_inner_four">
-        {% for item in data.media.related %}
+    <div id="gallery" class="row gallery_inner_four mx-0">
+        {% for item in data.albums %}
         <div class="col-lg-3 col-md-4 col-6 gallery_item px-2">
             <div class="gallery_post">
                 <div class="img">
-                    <a href="/news/{{item.name}}" target="_blank">
+                    <a href="/beauty/{{item.name}}" target="_blank">
                         <img src="/static/enoma/images/loading.gif" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
                     </a>
                 </div>
                 <div class="gallery_content">
-                    <a href="/news/{{item.name}}" target="_blank">
+                    <a href="/beauty/{{item.name}}" target="_blank">
                         <h3>{{item.title}}</h3>
                     </a>
+                    {% if item.model_title %}
+                    <a href="/model/{{item.model_name}}" target="_blank">
+                        <div class="g_tag"><i class="bi bi-person-circle"></i> {{item.model_title}}</div>
+                    </a>
+                    {% elif item.model_name %}
+                    <div class="g_tag"><i class="bi bi-person-circle"></i> {{item.model_name}}</div>
+                    {% endif %}
                     <div class="row">
                         <div class="g_tag col">
                             <i class="bi bi-calendar-date"></i>
@@ -172,7 +82,15 @@
             </div>
         </div>
         {% endfor %}
-        <div></div>
-        {% endblock%}
     </div>
+
+    {% if data.page.page_count > 1 %}
+        <div class="d-flex justify-content-center">
+            {{ pagination('?page=', data.page) }}
+        </div>
+    {% endif %}
+
 </div>
+
+
+{% endblock%}

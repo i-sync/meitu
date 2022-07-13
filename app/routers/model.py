@@ -11,7 +11,7 @@ from sqlalchemy.sql import text
 from starlette.responses import Response, RedirectResponse
 
 from app.common import MENU, COLORS, templates
-from app.library.models import session_scope, MeituMedia, MeituMediaTag, MeituCategory, MeituContent, MeituImage, MeituModel, MeituOrganize, MeituTag
+from app.library.models import session_scope, MeituAlbum, MeituMedia, MeituMediaTag, MeituCategory, MeituContent, MeituImage, MeituModel, MeituOrganize, MeituTag
 from app.library.models import MeituMediaModel
 from app.library.page import Page, PageAll, get_page_index
 from app.library.config import toDict, configs
@@ -54,10 +54,14 @@ async def model_detail(request: Request, name, page="1"):
         if not model:
             return RedirectResponse("/404")
 
-        rows = session.query(func.count(MeituAlbum.id)).filter(MeituAlbum.model_name == model.name, MeituModel.is_enabled == 1).scalar()
+        summary = eval(model.summary)
+        model.meta_keywords = ",".join([f"{x}:{summary[x]}" for x in summary.keys()])
+        model.summary_info = "".join([f"<span class='px-1'>{x} : {summary[x]}</span>" for x in summary.keys()])
+
+        rows = session.query(func.count(MeituAlbum.id)).filter(MeituAlbum.model_name == model.name, MeituAlbum.is_enabled == 1).scalar()
         page = Page(rows, page_index)
         #media.models = session.query(MeituMediaModel).filter(MeituMediaModel.media_id == media.id).all()
-        albums = session.query(MeituAlbum).filter(MeituAlbum.model_name == model.name, MeituModel.is_enabled == 1).limit(page.limit).offset(page.offset).all()
+        albums = session.query(MeituAlbum).filter(MeituAlbum.model_name == model.name, MeituAlbum.is_enabled == 1).limit(page.limit).offset(page.offset).all()
 
     data = {
         "menu": MENU,
