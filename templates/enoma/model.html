@@ -1,13 +1,13 @@
-{% extends 'base.html' %} {% block title %}模特明星{% endblock %} {% block metadata %}
+{% extends 'base.html' %} {% block title %}模特明星 - {{data.meta.site_name}}{% endblock %} {% block metadata %}
 
 <meta name="keywords" content="{{ data.meta.keywords }}" />
 <meta name="description" content="{{ data.meta.description }}" />
 <meta name="og:url" content="{{ request.url }}" />
-<meta name="og:title" content="模特明星" />
+<meta name="og:title" content="模特明星 - {{data.meta.site_name}}" />
 <meta name="og:description" content="{{ data.meta.description  }}" />
 <meta name="og:image" content="{{ data.models[0].cover }}" />
 <meta name="twitter:url" content="{{request.url}}" />
-<meta name="twitter:title" content="模特明星" />
+<meta name="twitter:title" content="模特明星 - {{data.meta.site_name}}" />
 <meta name="twitter:description" content="{{ data.meta.description }}" />
 <meta name="twitter:image" content="{{ data.models[0].cover }}" />
 <meta name="twitter:card" content="summary_large_image" />
