@@ -139,3 +139,12 @@ div.gallery_post_two div.img {
     margin-bottom: 20px;
 }
 /* detail page right part end */
+
+/* model detail page */
+
+.model-thumb{
+    max-width: 220px;
+    aspect-ratio: 1 / 1;
+}
+
+/* model detail page end */

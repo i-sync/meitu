@@ -32,11 +32,11 @@
     </nav>
 
     <div class="card flex-row flex-wrap my-3">
-        <div class="row g-0">
-            <div class="col-auto col-lg-3 col-md-3 col-sm-12">
-                <img src="{{data.model.cover}}"  referrerpolicy="no-referrer"  alt="{{data.model.title}}" />
+        <div class="row g-0 w-100">
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <img class="model-thumb" src="{% if data.model.cover %}{{data.model.cover}}{%else%}/static/enoma/images/meitu-square.png{% endif %}"  referrerpolicy="no-referrer"  alt="{{data.model.title}}" />
             </div>
-            <div class="col-auto col-lg-9 col-md-9 col-sm-12">
+            <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="card-body">
                     <h1 class="card-title">{{data.model.title}}</h1>
                     <p class="card-text">{{data.model.summary_info | safe}}</p>
