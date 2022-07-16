@@ -31,7 +31,7 @@
         </ol>
     </nav>
 
-    <div class="card flex-row flex-wrap my-3 mx-2">
+    <div class="card flex-row flex-wrap my-3">
         <div class="row g-0 w-100">
             <div class="col-lg-3 col-md-3 col-sm-12">
                 <img class="model-thumb" src="{% if data.tag.cover %}{{data.tag.cover}}{%else%}/static/enoma/images/meitu-square.png{% endif %}"  referrerpolicy="no-referrer"  alt="{{data.tag.title}}" />
@@ -47,14 +47,16 @@
             </div>
         </div>
     </div>
-    <ul class="nav nav-tabs my-2 mx-2">
-        {% for category in data.categories %}
-            <li class="nav-item">
-                <a class="nav-link {% if data.category_name == category.name %} active {% endif %}" aria-current="page" href="{% if category.name == 'beauty' %}/tags/{{data.tag.name}}{% else %}/tags/{{data.tag.name}}/{{category.name}}{% endif %}">{{category.title}}</a>
-            </li>
-        {% endfor %}
-    </ul>
-    <div id="gallery" class="row gallery_inner_four mx-0">
+    <div class="row">
+        <ul class="nav nav-tabs my-2 mx-2">
+            {% for category in data.categories %}
+                <li class="nav-item">
+                    <a class="nav-link {% if data.category_name == category.name %} active {% endif %}" aria-current="page" href="{% if category.name == 'beauty' %}/tags/{{data.tag.name}}{% else %}/tags/{{data.tag.name}}/{{category.name}}{% endif %}">{{category.title}}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="row gallery_inner_four">
         {% if data.category_name == 'beauty' or data.category_name == 'handsome' %}
             {% if data.albums|length > 0 %}
                 {% for item in data.albums %}
