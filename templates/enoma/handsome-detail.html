@@ -51,19 +51,23 @@
             </span>
             <span> / 日期:</span>
             <span>{{data.album.origin_created_at|date}}</span>
-            <span> / 模特:</span>
-            <span>
-                {% if data.album.model_title %}
-                <a href="/model/{{data.album.model_name}}" target="_blank">{{data.album.model_title}}</a>
-                {% else %} {{data.album.model_name}} {% endif %}
-            </span>
+            {% if data.album.model_title or data.album.model_name %}
+                <span> / 模特:</span>
+                <span>
+                    {% if data.album.model_title %}
+                    <a href="/model/{{data.album.model_name}}" target="_blank">{{data.album.model_title}}</a>
+                    {% else %}
+                        {{data.album.model_name}}
+                    {% endif %}
+                </span>
+            {% endif %}
         </small>
     </div>
 
     <div class="mb-2">
         <small class="text-muted">
             标签: {% for tag in data.album.tags %}
-            <a href="/tags/{{tag.name}}" class="badge bg-{{tag.color}}" target="_blank">{{tag.title}}</a>
+            <a href="/tags/{{tag.name}}/handsome" class="badge bg-{{tag.color}}" target="_blank">{{tag.title}}</a>
             {% endfor %}
         </small>
     </div>

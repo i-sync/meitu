@@ -43,18 +43,26 @@
             </span>
             <span> / 日期:</span>
             <span>{{data.album.origin_created_at|date}}</span>
-            <span> / 模特:</span>
-            <span>
-                {% if data.album.model_title %}
-                <a href="/model/{{data.album.model_name}}" target="_blank">{{data.album.model_title}}</a>
-                {% else %} {{data.album.model_name}} {% endif %}
-            </span>
-            <span> / 机构:</span>
-            <span>
-                {% if data.album.organize_title %}
-                <a href="/organize/{{data.album.organize_name}}" target="_blank">{{data.album.organize_title}}</a>
-                {% else %} {{data.album.organize_name}} {% endif %}
-            </span>
+
+            {% if data.album.model_title or data.album.model_name %}
+                <span> / 模特:</span>
+                <span>
+                    {% if data.album.model_title %}
+                    <a href="/model/{{data.album.model_name}}" target="_blank">{{data.album.model_title}}</a>
+                    {% else %}
+                        {{data.album.model_name}}
+                    {% endif %}
+                </span>
+            {% endif %}
+
+            {% if data.album.organize_title or data.album.organize_name %}
+                <span> / 机构:</span>
+                <span>
+                    {% if data.album.organize_title %}
+                    <a href="/organize/{{data.album.organize_name}}" target="_blank">{{data.album.organize_title}}</a>
+                    {% else %} {{data.album.organize_name}} {% endif %}
+                </span>
+            {% endif %}
         </small>
     </div>
 
