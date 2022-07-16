@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}{{data.organize.title}} - {{data.meta.site_name}}{% endblock %}
+
+{% block metadata %}
+
+<meta name="keywords" content="{{data.organize.title}}, {{ data.meta.keywords }}" />
+<meta name="description" content="{{ data.organize.description }}" />
+<meta name="og:url" content="{{ request.url }}" />
+<meta name="og:title" content="{{ data.organize.title }} - {{data.meta.site_name}}" />
+<meta name="og:description" content="{{ data.organize.description }}" />
+<meta name="og:image" content="{% if data.organize.cover %}{{data.organize.cover}}{%else%}{{data.meta.site_url}}/static/enoma/images/meitu-square.png{% endif %}" />
+<meta name="twitter:url" content="{{request.url}}" />
+<meta name="twitter:title" content="{{ data.organize.title }} - {{data.meta.site_name}}" />
+<meta name="twitter:description" content="{{ data.organize.description }}" />
+<meta name="twitter:image" content="{% if data.organize.cover %}{{data.organize.cover}}{%else%}{{data.meta.site_url}}/static/enoma/images/meitu-square.png{% endif %}" />
+<meta name="twitter:card" content="summary_large_image" />
+
+{% endblock %}
+
+{% block head %} {% endblock %}
+
+{% block content %}
+<div class="container px-2">
+    <nav style="--bs-breadcrumb-divider: '>'" class="pl-2" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="pl-2">
+                <i class="bi bi-signpost-2-fill"></i>
+            </li>
+            <li class="px-2">当前位置:</li>
+            <li class="breadcrumb-item"><a href="/">首页</a></li>
+            <li class="breadcrumb-item"><a href="/organize">写真机构</a></li>
+            <li class="breadcrumb-item" aria-current="page"><a href="/organize/{{data.organize.name}}">{{data.organize.title}}</a></li>
+            <li class="breadcrumb-item active">第{{data.page.page_index}}页</li>
+        </ol>
+    </nav>
+
+    <div class="flex-row flex-wrap my-2">
+        <div class="row g-0 w-100">
+            <div class="col-lg-3 col-md-3 col-sm-12">
+                <img class="model-thumb" src="{% if data.organize.cover %}{{data.organize.cover}}{%else%}/static/enoma/images/meitu-square.png{% endif %}"  referrerpolicy="no-referrer"  alt="{{data.organize.title}}" />
+            </div>
+            <div class="col-lg-9 col-md-9 col-sm-12">
+                <div class="card-body">
+                    <h1 class="card-title">{{data.organize.title}}</h1>
+                    <p class="card-text">{{data.organize.summary}}</p>
+                    {% if data.organize.description %}
+                        <p class="card-text">{{data.organize.description}}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row gallery_inner_four px-1">
+        {% for item in data.albums %}
+        <div class="col-lg-3 col-md-4 col-6 gallery_item px-2">
+            <div class="gallery_post">
+                <div class="img">
+                    <a href="/beauty/{{item.name}}" target="_blank">
+                        <img src="/static/enoma/images/loading.gif" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                    </a>
+                </div>
+                <div class="gallery_content">
+                    <a href="/beauty/{{item.name}}" target="_blank">
+                        <h3>{{item.title}}</h3>
+                    </a>
+                    {% if item.organize_title %}
+                    <a href="/organize/{{item.organize_name}}" target="_blank">
+                        <div class="g_tag"><i class="bi bi-person-circle"></i> {{item.organize_title}}</div>
+                    </a>
+                    {% elif item.organize_name %}
+                    <div class="g_tag"><i class="bi bi-person-circle"></i> {{item.organize_name}}</div>
+                    {% endif %}
+                    <div class="row">
+                        <div class="g_tag col-auto">
+                            <i class="bi bi-calendar-date"></i>
+                            {{item.origin_created_at | date}}
+                        </div>
+                        <div class="g_tag col text-end">
+                            <i class="bi bi-eye"></i>
+                            {{item.view_count}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if data.page.page_count > 1 %}
+        <div class="d-flex justify-content-center">
+            {{ pagination('?page=', data.page) }}
+        </div>
+    {% endif %}
+
+</div>
+
+
+{% endblock%}

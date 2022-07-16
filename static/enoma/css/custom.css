@@ -148,3 +148,19 @@ div.gallery_post_two div.img {
 }
 
 /* model detail page end */
+
+/* organize page */
+.gallery-organize .gallery_item .gallery_post .img {
+    aspect-ratio: 1 / 1;
+    position: relative;
+}
+.gallery-organize .gallery_item .gallery_post .img img{
+    aspect-ratio: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    position: absolute;
+}
+/* organize page end */
