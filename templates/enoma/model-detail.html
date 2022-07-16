@@ -17,7 +17,7 @@
 {% block head %} {% endblock %}
 
 {% block content %}
-<div class="container">
+<div class="container px-2">
     <nav style="--bs-breadcrumb-divider: '>'" class="pl-2" aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="pl-2">
@@ -31,7 +31,7 @@
         </ol>
     </nav>
 
-    <div class="card flex-row flex-wrap my-3 mx-2">
+    <div class="flex-row flex-wrap my-2">
         <div class="row g-0 w-100">
             <div class="col-lg-3 col-md-3 col-sm-12">
                 <img class="model-thumb" src="{% if data.model.cover %}{{data.model.cover}}{%else%}/static/enoma/images/meitu-square.png{% endif %}"  referrerpolicy="no-referrer"  alt="{{data.model.title}}" />
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div id="gallery" class="row gallery_inner_four mx-0">
+    <div class="row gallery_inner_four px-1">
         {% for item in data.albums %}
         <div class="col-lg-3 col-md-4 col-6 gallery_item px-2">
             <div class="gallery_post">
