@@ -86,7 +86,6 @@ class MeituCategory(Base):
     name = Column(String(20))
     title = Column(String(100))
     created_at = Column(Float)
-    is_enabled = Column(Boolean)
 
 class MeituImage(Base):
     __tablename__ = "meitu_image"
