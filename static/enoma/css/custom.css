@@ -164,3 +164,51 @@ div.gallery_post_two div.img {
     position: absolute;
 }
 /* organize page end */
+
+
+/* image circle  */
+/* https://gist.github.com/baladkb/259c13c7cbaf79e55e2f6ddb859f3977 */
+/* <div class="container">
+	<div class="row">
+		<h2>Any image, size doesn´t matter, centered and respecting ratio</h2>
+	</div>
+    <div class="row">
+        <div class="col-sm-2">
+            <p> Image in to circle</p>
+            <div  class="ratio img-responsive img-circle" style="background-image: url(http://image.com/img/trovacamporella-fiat500.png);"></div>
+            <p> Image in to circle with link</p>
+            <a href="http://trovacamporall.com" class="ratio img-responsive img-circle" style="background-image: url(http://image.com/img/trovacamporella-fiat500.png);"></a>
+        </div>
+    </div>
+</div> */
+
+.caption div {
+    box-shadow: 0 0 5px #C8C8C8;
+    transition: all 0.3s ease 0s;
+}
+.img-circle {
+    border-radius: 50%;
+}
+.img-circle {
+    border-radius: 0;
+}
+
+.ratio {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    height: 0;
+    padding-bottom: 100%;
+    position: relative;
+    width: 100%;
+}
+.img-circle {
+    border-radius: 50%;
+}
+.img-responsive {
+    display: block;
+    height: auto;
+    max-width: 100%;
+}
+/* image circle end  */

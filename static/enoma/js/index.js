@@ -1,4 +1,15 @@
 // awesome.js
+// search
+$("#search_form").submit(function(event) {
+    var q = $.trim($("#search_form input#keyword").val());
+    if (q == '') {
+        window.location.href = '/search';
+        return false;
+    }
+    var ac = $(this).attr("action");
+    window.location.href = ac + "/" + q;
+    return false;
+});
 
 // patch for lower-version IE:
 
@@ -440,7 +451,7 @@ function register_paging_components(app)
                 }
                 return l;
             }
-        }, 
+        },
         methods:{
             gotoPage: function(i) {
                 var r = parseQueryString();

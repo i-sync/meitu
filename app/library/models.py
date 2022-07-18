@@ -156,3 +156,11 @@ class MeituTmpModel(Base):
     __tablename__ = "meitu_tmp_model"
     name = Column(String(100), primary_key=True)
     model_url = Column(String(200))
+
+
+class MeituSearch(Base):
+    __tablename__ = "meitu_search"
+    id = Column(Integer, primary_key=True)
+    title = Column(String(50))
+    count = Column(Integer)
+    created_at = Column(Float)

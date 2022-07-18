@@ -188,3 +188,12 @@ create table meitu_tmp_model(
     `model_url` varchar(200),
     primary key (`name`)
 ) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+create table meitu_search (
+    `id` int not null AUTO_INCREMENT,
+    `title` varchar(50) not null,
+    `count` int unsigned not null default 0,
+    `created_at` real not null,
+    unique key `idx_title` (`title`),
+    primary key (`id`)
+) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
