@@ -181,7 +181,13 @@
 
 
                             <form id="search_form" class="d-flex" action="/search" methods="get">
-                                <input id="keyword" class="form-control me-2 w-auto" type="search" name="s" placeholder="Search" aria-label="Search" />
+                                <div class="input-group input-group-sm me-2 w-auto">
+                                    <input id="keyword" class="form-control" type="search" name="s" placeholder="Search" aria-label="Search" />
+                                    <a class="input-group-text" href="/search" title="热搜榜" target="_blank">
+                                        <img src="/static/enoma/images/hot_search.png" class="pe-1" alt="热门搜索词排行" />
+                                        热搜榜
+                                    </a>
+                                </div>
                                 <button class="btn btn-outline-light" type="submit">搜索</button>
                             </form>
                         </div>

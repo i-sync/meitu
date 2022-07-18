@@ -212,3 +212,15 @@ div.gallery_post_two div.img {
     max-width: 100%;
 }
 /* image circle end  */
+
+
+/* search hotlist */
+#search_form .input-group-text img {
+    /* display: inline-block;
+    top: 2px;
+    left: 1px;
+    width: 12px; */
+    height: 15px;
+    vertical-align: middle
+}
+/* search hotlist end */
