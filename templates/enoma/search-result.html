@@ -41,7 +41,7 @@
 
     <div class="row">
         <div class="col-sm-12 col-md-9 col-lg-9">
-
+            {% if data.albums | length > 0 %}
             <div class="row gallery_inner_four">
                 {% for item in data.albums %}
                 <div class="col-lg-3 col-md-4 col-6 gallery_item px-2">
@@ -77,6 +77,11 @@
                 </div>
                 {% endfor %}
             </div>
+            {% else %}
+            <div class="w-100 text-center my-5 py-5">
+                {% if data.error %}{{data.error}}{% else %}暂无结果, 请试试其关键词{% endif %}
+            </div>
+            {% endif %}
 
             {% if data.page.page_count > 1 %}
                 <div class="d-flex justify-content-center">
@@ -87,6 +92,7 @@
         </div>
 
             <div class="col-sm-12 col-md-3 col-lg-3">
+                {% if data.models | length > 0 %}
                 <div>
                     <h5><b>相关模特明星</b></h5>
                 </div>
@@ -108,7 +114,9 @@
                     </div>
                     {% endfor %}
                 </div>
+                {% endif %}
 
+                {% if data.organizes | length > 0 %}
                 <div>
                     <h5><b>相关机构</b></h5>
                 </div>
@@ -126,6 +134,9 @@
                     {% endfor %}
                 </div>
 
+                {% endif %}
+
+                {% if data.tags | length > 0 %}
                 <div>
                     <h5><b>相关主题</b></h5>
                 </div>
@@ -142,6 +153,26 @@
                     </div>
                     {% endfor %}
                 </div>
+                {% endif %}
+
+                {% if data.hotlist | length > 0 %}
+                <div>
+                    <h5><b>热门搜索词</b></h5>
+                </div>
+                <div class="row">
+                    {% for item in data.hotlist %}
+                    <div class="col-lg-6 col-md-6 col-6 gallery_item mb-3">
+                        <div class="gallery_post card text-center">
+                            <div class="gallery_content">
+                                <a href="/search/{{item.title | urlencode}}" target="_blank">
+                                    <h6>{{item.title}}</h6>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </div>
     </div>
 

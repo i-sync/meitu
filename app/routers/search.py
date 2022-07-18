@@ -42,30 +42,28 @@ async def search(s, request: Request, page = "1"):
     page_index = get_page_index(page)
 
     if len(s) > 10:
+        with session_scope() as session:
+            # hotlist
+            hotlist = session.query(MeituSearch).order_by(desc(MeituSearch.count)).limit(10).all()
+
         albums = models = tags = organizes = []
         data = {
             "menu": MENU,
             "meta": configs.meta,
-            "page": page,
+            "page":  Page(0, page_index),
             "keyword": s,
             "albums": albums,
             "models": models,
             "tags": tags,
-            "organizes": organizes
+            "organizes": organizes,
+            "hotlist": hotlist,
+            "error": "搜索关键词太长，请试试其它关键词"
         }
         return templates.TemplateResponse("search-result.html", {"request": request, "data": data})
 
     with session_scope() as session:
-        search = session.query(MeituSearch).filter(MeituSearch.title == s).first()
-        if search:
-            search.count += 1
-        else:
-            search = MeituSearch()
-            search.title = s.strip()
-            search.count = 0
-            search.created_at = time.time()
-            session.add(search)
-        session.commit()
+        # hotlist
+        hotlist = session.query(MeituSearch).order_by(desc(MeituSearch.count)).limit(10).all()
 
         # search model
         model = session.query(MeituModel).filter(MeituModel.title == s, MeituModel.is_enabled == 1).first()
@@ -86,6 +84,19 @@ async def search(s, request: Request, page = "1"):
         rows = session.query(func.count(MeituAlbum.id)).filter(MeituAlbum.title.contains(s), MeituAlbum.is_enabled == 1).scalar()
         page = Page(rows, page_index)
         if rows:
+
+            # hit data , commit search keyword
+            search = session.query(MeituSearch).filter(MeituSearch.title == s).first()
+            if search:
+                search.count += 1
+            else:
+                search = MeituSearch()
+                search.title = s.strip()
+                search.count = 0
+                search.created_at = time.time()
+                session.add(search)
+            session.commit()
+
             #albums = session.query(MeituAlbum).filter(MeituAlbum.title.contains(s), MeituAlbum.is_enabled == 1).offset(page.offset).limit(page.limit).all()
             sql = text(f"select meitu_album.*, meitu_model.title as model_title from meitu_album left join meitu_model on meitu_album.model_name = meitu_model.name where meitu_album.title like '%' :s '%' and meitu_album.is_enabled = 1 limit :limit offset :offset")
             albums = session.execute(sql, {"s": s, "limit": page.limit, "offset": page.offset}).fetchall()
@@ -120,6 +131,7 @@ async def search(s, request: Request, page = "1"):
         "albums": albums,
         "models": models,
         "tags": tags,
-        "organizes": organizes
+        "organizes": organizes,
+        "hotlist": hotlist
     }
     return templates.TemplateResponse("search-result.html", {"request": request, "data": data})
