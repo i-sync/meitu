@@ -32,6 +32,7 @@ from app.library.tools import date_filter, datetime_filter
 from app.library.page import Page, PageAll, get_page_index
 from app.library.logger import logger
 from app.library.config import configs
+from app.common import MENU, COLORS, templates
 
 app = FastAPI()
 app.include_router(login.router)
@@ -90,8 +91,11 @@ async def add_user_agent_parse(request: Request, call_next):
     reference: https://stackoverflow.com/questions/64602770/how-can-i-set-attribute-to-request-object-in-fastapi-from-middleware
     """
     if not request.url.path.startswith('/static') and request.headers.get("user-agent"):
-        user_agent = parse(request.headers.get("user-agent"))
-        request.state.user_agent = user_agent
+        try:
+            user_agent = parse(request.headers.get("user-agent"))
+            request.state.user_agent = user_agent
+        except:
+            pass
     return await call_next(request)
 
 @app.middleware("http")
@@ -115,45 +119,67 @@ async def add_process_time_header(request: Request, call_next):
 #     else:
 #         return user
 
-# def get_category():
-#     with session_scope() as session:
-#         categories = session.query(XiurenCategory).filter(XiurenCategory.is_enabled == 1).all()
-#         session.expunge_all()
-#     # print(categories)
-#     return categories
+@app.get('/', response_class=HTMLResponse)
+async def index(request: Request):
+    with session_scope() as session:
 
-# def parse_user_agent(request: Request):
-#     user_agent = parse(request.headers.get("user-agent"))
-#     request.user_agent = user_agent
+        # models
+        sql = f"""select meitu_model.*, count(meitu_album.id) as model_count from meitu_model
+                    left join meitu_album on meitu_model.name = meitu_album.model_name
+                    where meitu_model.is_enabled = 1 and meitu_model.cover is not null
+                    group by meitu_model.id
+                    order by model_count desc limit 12"""
+        models = session.execute(sql).fetchall()
 
-# @app.get("/", response_class=HTMLResponse)
-# async def index(request: Request, page = "1", order = "new"):
-#     parse_user_agent(request)
-#     categories = get_category()
-#     page_index = get_page_index(page)
-#     with session_scope() as session:
-#         #rows = session.query(func.count(XiurenAlbum.id)).filter(XiurenAlbum.is_enabled == 1).scalar()
-#         page = Page(200, page_index)
-#         albums = session.query(XiurenAlbum).filter(XiurenAlbum.is_enabled == 1).order_by(func.random()).offset(page.offset).limit(page.limit).all()
-#         for album in albums:
-#             album.category = next(x for x in categories if x.id == album.category_id)
-#         tops = session.query(XiurenAlbum).filter(XiurenAlbum.is_enabled == 1).order_by(desc(XiurenAlbum.view_count)).limit(10).all()
-#         for album in tops:
-#             album.category = next(x for x in categories if x.id == album.category_id)
-#     data = {
-#         "menu": MENU,
-#         "page": page,
-#         "categories": get_category(),
-#         "tops": tops,
-#         "albums": albums,
-#         "url": request.url,
-#         "meta": configs.meta,
-#         "cover": tops[0].cover if len(tops) else f"{configs.meta.site_url}/static/images/cover.jpg",
-#         "friendly_link": configs.friendly_link,
-#         "keywords": configs.meta.keywords,
-#         "description": configs.meta.description
-#     }
-#     return templates.TemplateResponse("index.html", {"request": request, "data": data})
+        # tags
+        sql = f"""select meitu_tag.*, count(meitu_album_tag.id) as tag_count from meitu_tag
+                    left join meitu_album_tag on meitu_tag.id = meitu_album_tag.tag_id
+                    where meitu_tag.is_enabled = 1
+                    group by meitu_tag.id
+                    order by tag_count desc limit 18"""
+        tags = session.execute(sql).fetchall()
+
+        # organizes
+        organizes = []
+        # sql = f"""select meitu_organize.*, count(meitu_album.id) as organize_count from meitu_organize
+        #             left join meitu_album on meitu_organize.name = meitu_album.organize_name
+        #             where meitu_organize.is_enabled = 1
+        #             group by meitu_organize.id
+        #             order by organize_count desc limit 20"""
+        # organizes = session.execute(sql).fetchall()
+
+        # beauty
+        sql = """select meitu_album.*, meitu_model.title as model_title
+            from meitu_album
+            left join meitu_model on meitu_album.model_name = meitu_model.name
+            where meitu_album.category_name = 'beauty' and meitu_album.is_enabled = 1 order by meitu_album.view_count desc limit 12"""
+        beauty = session.execute(sql).fetchall()
+
+        # handsome
+        sql = """select meitu_album.*, meitu_model.title as model_title
+            from meitu_album
+            left join meitu_model on meitu_album.model_name = meitu_model.name
+            where meitu_album.category_name = 'handsome' and meitu_album.is_enabled = 1 order by meitu_album.view_count desc limit 12"""
+        handsome = session.execute(sql).fetchall()
+
+        # news
+        news = session.query(MeituMedia).filter(MeituMedia.category_name == 'news', MeituMedia.is_enabled == 1).order_by(desc(MeituMedia.view_count)).limit(12).all()
+
+        # street
+        street = session.query(MeituMedia).filter(MeituMedia.category_name == 'street', MeituMedia.is_enabled == 1).order_by(desc(MeituMedia.view_count)).limit(12).all()
+
+    data ={
+        "menu": MENU,
+        "meta": configs.meta,
+        "models": models,
+        "tags": tags,
+        "organizes": organizes,
+        "beauty": beauty,
+        "handsome": handsome,
+        "news": news,
+        "street": street
+    }
+    return templates.TemplateResponse("index.html", {"request": request, "data": data})
 
 
 # @app.get("/limit-error", response_class=HTMLResponse)
