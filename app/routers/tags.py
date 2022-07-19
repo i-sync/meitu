@@ -28,8 +28,13 @@ async def tags(request: Request, page = "1"):
         rows = session.query(func.count(MeituTag.id)).filter(MeituTag.is_enabled == 1).scalar()
         page = Page(rows, page_index)
 
-        tags = session.query(MeituTag).filter(MeituTag.is_enabled == 1).limit(page.limit).offset(page.offset).all()
-
+        #tags = session.query(MeituTag).filter(MeituTag.is_enabled == 1).limit(page.limit).offset(page.offset).all()
+        sql = f"""select meitu_tag.*, count(meitu_album_tag.id) as tag_count from meitu_tag
+                    left join meitu_album_tag on meitu_tag.id = meitu_album_tag.tag_id
+                    where meitu_tag.is_enabled = 1
+                    group by meitu_tag.id
+                    order by tag_count desc limit {page.limit} offset {page.offset}"""
+        tags = session.execute(sql).fetchall()
     data ={
         "menu": MENU,
         "meta": configs.meta,

@@ -96,13 +96,13 @@
                 <div>
                     <h5><b>相关模特明星</b></h5>
                 </div>
-                <div class="gallery-models row">
+                <div class="gallery-models search-models row">
                     {% for item in data.models %}
                     <div class="col-lg-6 col-md-6 col-6 gallery_item mb-3">
                         <div class="gallery_post">
-                            <div class="img">
+                            <div class="img p-2">
                                 <a href="/model/{{item.name}}" target="_blank">
-                                    <img src="/static/enoma/images/loading.gif" data-src="{% if item.cover %}{{item.cover}}{%else%}/static/enoma/images/meitu-square.png{% endif %}" referrerpolicy="no-referrer" alt="{{item.title}}" class="img-thumbnail lazy" />
+                                    <img src="/static/enoma/images/loading.gif" data-src="{% if item.cover %}{{item.cover}}{%else%}/static/enoma/images/meitu-square.png{% endif %}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
                                 </a>
                             </div>
                             <div class="gallery_content text-center">
