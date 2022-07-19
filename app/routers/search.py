@@ -62,8 +62,6 @@ async def search(s, request: Request, page = "1"):
         return templates.TemplateResponse("search-result.html", {"request": request, "data": data})
 
     with session_scope() as session:
-        # hotlist
-        hotlist = session.query(MeituSearch).order_by(desc(MeituSearch.count)).limit(10).all()
 
         # search model
         model = session.query(MeituModel).filter(MeituModel.title == s, MeituModel.is_enabled == 1).first()
@@ -122,6 +120,9 @@ async def search(s, request: Request, page = "1"):
             organizes = session.execute(sql, {"s": s}).fetchall()
         else:
             albums = models = tags = organizes = []
+
+        # hotlist
+        hotlist = session.query(MeituSearch).order_by(desc(MeituSearch.count)).limit(10).all()
 
     data = {
         "menu": MENU,
