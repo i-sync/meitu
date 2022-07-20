@@ -7,7 +7,7 @@ from base64 import b64decode
 from typing import Optional
 
 from fastapi import FastAPI, Request, Depends
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.exceptions import HTTPException
@@ -16,6 +16,8 @@ from starlette.responses import Response, RedirectResponse
 from sqlalchemy import func, desc
 from sqlalchemy.sql import text
 
+
+from cashews import cache
 
 from user_agents import parse
 
@@ -110,6 +112,59 @@ async def add_process_time_header(request: Request, call_next):
         process_time = time.time() - start_time
         response.headers["X-Process-Time"] = str(process_time)
         return response
+    return await call_next(request)
+
+async def make_cached_data(response: StreamingResponse):
+    content = b""
+    async for chunk in response.body_iterator:
+        content += chunk
+
+    if response.media_type == 'application/json':
+        response_cls = ORJSONResponse
+    else:
+        response_cls = Response
+
+    return response_cls(
+        status_code=response.status_code,
+        content=content,
+        headers=response.headers,
+        media_type=response.media_type,
+        background=response.background,
+    )
+
+
+cache.setup("mem://?check_interval=10&size=10000")
+
+@app.middleware("http")
+async def cache_html_response(request: Request, call_next):
+    """
+    How to cache StreamReponse or make a cache middleware
+    https://github.com/tiangolo/fastapi/issues/4751
+
+    cache all GET request to 1h, except view_count, static files.
+    """
+    if request.scope['method'] == "GET" \
+        and not request.url.path.startswith('/static') \
+        and not request.url.path.startswith('/album/plus/count') \
+        and not request.url.path.startswith('/media/plus/count/'):
+
+        key = request.scope['method'] + request.scope["path"] + str(request.scope["query_string"])
+        cached_data = await cache.get(key)
+
+        # missing cache
+        if cached_data is None:
+            response = await call_next(request)
+
+            # only cache when status code == 200
+            if response.status_code == 200:
+                # 写入缓存
+                response = await make_cached_data(response)
+                await cache.set(key, response, expire= 60 * 60)
+
+            return response
+
+        return cached_data
+
     return await call_next(request)
 
 # def check_login(request: Request):
