@@ -24,26 +24,28 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-lg-9 col-sd-9 col-sm=12 gallery-models search-models row">
-            {% for item in data.models %}
-            <div class="col-lg-2 col-md-3 col-sm-6 col-6 gallery_item mb-3">
-                <div class="gallery_post">
-                    <div class="img p-2">
-                        <a href="/model/{{item.name}}" target="_blank">
-                            <img src="/static/enoma/images/loading.gif" data-src="{% if item.cover %}{{item.cover}}{%else%}/static/enoma/images/meitu-square.png{% endif %}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
-                        </a>
-                    </div>
-                    <div class="gallery_content text-center">
-                        <a href="/model/{{item.name}}" target="_blank">
-                            <h6>{{item.title}}</h6>
-                        </a>
+        <div class="col-lg-9 col-sd-9 col-sm=12 gallery-models search-models">
+            <div class="row">
+                {% for item in data.models %}
+                <div class="col-lg-2 col-md-3 col-sm-4 col-4 gallery_item mb-3">
+                    <div class="gallery_post">
+                        <div class="img p-2">
+                            <a href="/model/{{item.name}}" target="_blank">
+                                <img src="/static/enoma/images/loading.gif" data-src="{% if item.cover %}{{item.cover}}{%else%}/static/enoma/images/meitu-square.png{% endif %}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                            </a>
+                        </div>
+                        <div class="gallery_content text-center">
+                            <a href="/model/{{item.name}}" target="_blank">
+                                <h6>{{item.title}}</h6>
+                            </a>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
 
-        <div class="col-lg-3 col-sd-3 col-sm=12 col-12 h-100">
+        <div class="col-lg-3 col-sd-3 col-sm-12 col-12 h-100">
             <h3><b>热门标签</b></h3>
             <div class="row">
                 {% for item in data.tags %}
