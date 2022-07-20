@@ -64,8 +64,19 @@ div.gallery_post_two div.img {
     }
 
     .header_area form input.form-control {
-        max-width: 65%;
+        /* max-width: 60%; */
     }
+
+}
+
+#search_form a {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+#search_form button{
+    /* padding: 1px 6px; */
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
 }
 
 .menu_toggle .hamburger span {
