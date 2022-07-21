@@ -63,19 +63,58 @@ async def search(s, request: Request, page = "1"):
 
     with session_scope() as session:
 
-        # search model
-        model = session.query(MeituModel).filter(MeituModel.title == s, MeituModel.is_enabled == 1).first()
-        if model:
-            return RedirectResponse(f"/model/{model.name}")
-
         # search tag
         tag = session.query(MeituTag).filter(MeituTag.title == s, MeituTag.is_enabled == 1).first()
         if tag:
+
+            # hit data , commit search keyword
+            search = session.query(MeituSearch).filter(MeituSearch.title == s).first()
+            if search:
+                search.count += 1
+            else:
+                search = MeituSearch()
+                search.title = s.strip()
+                search.count = 0
+                search.created_at = time.time()
+                session.add(search)
+            session.commit()
+
             return RedirectResponse(f"/tags/{tag.name}")
+
+        # search model
+        model = session.query(MeituModel).filter(MeituModel.title == s, MeituModel.is_enabled == 1).first()
+        if model:
+
+            # hit data , commit search keyword
+            search = session.query(MeituSearch).filter(MeituSearch.title == s).first()
+            if search:
+                search.count += 1
+            else:
+                search = MeituSearch()
+                search.title = s.strip()
+                search.count = 0
+                search.created_at = time.time()
+                session.add(search)
+            session.commit()
+
+            return RedirectResponse(f"/model/{model.name}")
 
         # search organize
         organize = session.query(MeituOrganize).filter(MeituOrganize.title == s, MeituOrganize.is_enabled == 1).first()
         if organize:
+
+            # hit data , commit search keyword
+            search = session.query(MeituSearch).filter(MeituSearch.title == s).first()
+            if search:
+                search.count += 1
+            else:
+                search = MeituSearch()
+                search.title = s.strip()
+                search.count = 0
+                search.created_at = time.time()
+                session.add(search)
+            session.commit()
+
             return RedirectResponse(f"/organize/{organize.name}")
 
 
