@@ -26,20 +26,16 @@
     "site_url": "https://meitu.knit.bid",
     "site_email": "admin@knit.bid",
     "keywords": "帅哥套图, 帅哥写真, 明星帅哥, 美女套图, 美女写真, 街拍, 娱报",
-    "description": "帅哥套图, 帅哥写真, 明星帅哥, 美女套图, 美女写真, 街拍, 娱报。美图欣赏"
-  },
-  "friendly_link": [
-    {
-      "name": "Blog",
-      "link": "https://www.viagle.cn"
-    },
-    {
-      "name": "XX爱妹子",
-      "link": "https://xx.knit.bid"
-    },
-    {
-      "name": "美女写真",
-      "link": "https://portrait.knit.bid"
-    }
-  ]
+    "description": "帅哥套图, 帅哥写真, 明星帅哥, 美女套图, 美女写真, 街拍, 娱报。美图欣赏",
+    "friendly_link": [
+      {
+        "name": "XX爱妹子",
+        "link": "https://xx.knit.bid"
+      },
+      {
+        "name": "美女写真",
+        "link": "https://portrait.knit.bid"
+      }
+    ]
+  }
 }

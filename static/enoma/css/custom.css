@@ -196,3 +196,17 @@ div.gallery_post_two div.img {
     border-radius: 50%;
 }
 /* search models end */
+
+
+/* footer friendly link */
+.footer_area .list-group .list-group-item{
+    background-color: transparent;
+    border: none;
+}
+.footer_area .list-group .list-group-item a{
+    color: #fff;
+}
+.footer_area .list-group .list-group-item a:hover{
+    color: #fff;
+}
+/* footer friendly link end */

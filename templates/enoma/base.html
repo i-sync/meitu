@@ -246,25 +246,20 @@
 
             <footer class="footer_area" data-bg-color="#ff4a4a">
                 <div class="container">
-                    <div class="footer_top">
+                    <div class="footer_top pb-3">
                         <a href="/" class="f_logo"><img src="/static/enoma/images/meitu_white_logo.png" srcset="/static/enoma/images/meitu_white_logo.png 2x" alt="meitu logo" /></a>
                         <h3>美图分享,每日更新.</h3>
-                        <ul class="list-unstyled social_link">
-                            <li>
-                                <a href="#"><i class="social_dribbble"></i><i class="social_dribbble"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="social_googleplus"></i><i class="social_googleplus"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="social_facebook"></i><i class="social_facebook"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="social_twitter"></i><i class="social_twitter"></i></a>
-                            </li>
-                        </ul>
+                        {% if data.meta and  data.meta.friendly_link|length > 0 %}
+                            <ul class="list-group list-group-flush">
+                                {% for item in data.meta.friendly_link %}
+                                <li class="list-group-item">
+                                    <a href="{{item.link}}" target="_blank">{{item.name}}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
                     </div>
-                    <div class="footer_bottom">
+                    <div class="footer_bottom pb-5">
                         <p>Copyright © <script>document.write(new Date().getFullYear())</script></p>
                         <p>本站数据来自网络，如侵害您的权利请联系本站删除相关信息，邮箱：<a href="mailto:{{data.meta.site_email}}" title="">{{data.meta.site_email}}</a></p>
                     </div>
