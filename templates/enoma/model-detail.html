@@ -38,6 +38,7 @@
             </div>
             <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="card-body">
+                    <span class="d-none"><script src="/model/plus/count/{{data.model.id}}" language="javascript"></script></span>
                     <h1 class="card-title">{{data.model.title}}</h1>
                     <p class="card-text">{{data.model.summary_info | safe}}</p>
                     {% if data.model.description %}

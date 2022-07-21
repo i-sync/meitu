@@ -15,12 +15,15 @@ create table meitu_model (
     `summary` varchar(500) null,
     `description` varchar(2048) null,
     `cover` varchar(200) null,
+    `view_count` int unsigned not null default 0,
     `created_at` real not null,
     `is_enabled` bool not null default 1,
     unique key `idx_name` (`name`),
     key `idx_title` (`title`),
     primary key (`id`)
 ) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- alter table meitu_model add column `view_count` int unsigned not null default 0 after `cover`;
 
 create table meitu_organize (
     `id` int not null AUTO_INCREMENT,
@@ -29,12 +32,16 @@ create table meitu_organize (
     `summary` varchar(500) null,
     `description` varchar(2048) null,
     `cover` varchar(200) null,
+    `view_count` int unsigned not null default 0,
     `created_at` real not null,
     `is_enabled` bool not null default 1,
     unique key `idx_name` (`name`),
     key `idx_title` (`title`),
     primary key (`id`)
 ) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- alter table meitu_organize add column `view_count` int unsigned not null default 0 after `cover`;
 
 create table meitu_tag (
     `id` int not null AUTO_INCREMENT,
@@ -43,12 +50,15 @@ create table meitu_tag (
     `summary` varchar(500) null,
     `description` varchar(2048) null,
     `cover` varchar(200) null,
+    `view_count` int unsigned not null default 0,
     `created_at` real not null,
     `is_enabled` bool not null default 1,
     unique key `idx_name` (`name`),
     key `idx_title` (`title`),
     primary key (`id`)
 ) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- alter table meitu_tag add column `view_count` int unsigned not null default 0 after `cover`;
 
 create table meitu_album (
     `id` int not null AUTO_INCREMENT,

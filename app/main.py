@@ -145,8 +145,7 @@ async def cache_html_response(request: Request, call_next):
     """
     if request.scope['method'] == "GET" \
         and not request.url.path.startswith('/static') \
-        and not request.url.path.startswith('/album/plus/count') \
-        and not request.url.path.startswith('/media/plus/count/'):
+        and request.url.path.find('/plus/count') == -1 :
 
         key = request.scope['method'] + request.scope["path"] + str(request.scope["query_string"])
         cached_data = await cache.get(key)
@@ -279,3 +278,35 @@ async def count(id, request: Request):
             session.commit()
     return f"document.write('{view_count}');"
 
+@app.get("/model/plus/count/{id}", response_class=HTMLResponse)
+async def count(id, request: Request):
+    if not id or not id.isdigit():
+        return "document.write('0');"
+    with session_scope() as session:
+        item = session.query(MeituModel).filter(MeituModel.id == int(id), MeituModel.is_enabled == 1).first()
+        if item:
+            item.view_count += 1
+            session.commit()
+    return ""
+
+@app.get("/organize/plus/count/{id}", response_class=HTMLResponse)
+async def count(id, request: Request):
+    if not id or not id.isdigit():
+        return "document.write('0');"
+    with session_scope() as session:
+        item = session.query(MeituOrganize).filter(MeituOrganize.id == int(id), MeituOrganize.is_enabled == 1).first()
+        if item:
+            item.view_count += 1
+            session.commit()
+    return ""
+
+@app.get("/tags/plus/count/{id}", response_class=HTMLResponse)
+async def count(id, request: Request):
+    if not id or not id.isdigit():
+        return "document.write('0');"
+    with session_scope() as session:
+        item = session.query(MeituTag).filter(MeituTag.id == int(id), MeituTag.is_enabled == 1).first()
+        if item:
+            item.view_count += 1
+            session.commit()
+    return ""
