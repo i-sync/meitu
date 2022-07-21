@@ -27,4 +27,10 @@ venv/
 static/media
 crawler/nohup*
 app/config/user.json
-sitemap.xml
+sitemap-beauty.xml
+sitemap-handsome.xml
+sitemap-news.xml
+sitemap-street.xml
+sitemap-model.xml
+sitemap-organize.xml
+sitemap-tags.xml
