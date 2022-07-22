@@ -86,33 +86,6 @@ manager.not_authenticated_exception = NotAuthenticatedException
 app.add_exception_handler(NotAuthenticatedException, exc_handler)
 
 
-@app.middleware("http")
-async def add_user_agent_parse(request: Request, call_next):
-    """
-    fastapi middleware for user_agent parse
-    reference: https://stackoverflow.com/questions/64602770/how-can-i-set-attribute-to-request-object-in-fastapi-from-middleware
-    """
-    if not request.url.path.startswith('/static') and request.headers.get("user-agent"):
-        try:
-            user_agent = parse(request.headers.get("user-agent"))
-            request.state.user_agent = user_agent
-        except:
-            pass
-    return await call_next(request)
-
-@app.middleware("http")
-async def add_process_time_header(request: Request, call_next):
-    """
-    fastapi middleware add process time for response header
-    reference: https://fastapi.tiangolo.com/tutorial/middleware/
-    """
-    if not request.url.path.startswith('/static'):
-        start_time = time.time()
-        response = await call_next(request)
-        process_time = time.time() - start_time
-        response.headers["X-Process-Time"] = str(process_time)
-        return response
-    return await call_next(request)
 
 async def make_cached_data(response: StreamingResponse):
     content = b""
@@ -147,7 +120,7 @@ async def cache_html_response(request: Request, call_next):
         and not request.url.path.startswith('/static') \
         and request.url.path.find('/plus/count') == -1 :
 
-        key = request.scope['method'] + request.scope["path"] + str(request.scope["query_string"])
+        key = f"{request.scope['method']}-{request.scope['path']}-{str(request.scope['query_string'])}-{request.state.user_agent.is_mobile if request.state.user_agent else 'None'}"
         cached_data = await cache.get(key)
 
         # missing cache
@@ -164,6 +137,35 @@ async def cache_html_response(request: Request, call_next):
 
         return cached_data
 
+    return await call_next(request)
+
+
+@app.middleware("http")
+async def add_user_agent_parse(request: Request, call_next):
+    """
+    fastapi middleware for user_agent parse
+    reference: https://stackoverflow.com/questions/64602770/how-can-i-set-attribute-to-request-object-in-fastapi-from-middleware
+    """
+    if not request.url.path.startswith('/static') and request.headers.get("user-agent"):
+        try:
+            user_agent = parse(request.headers.get("user-agent"))
+            request.state.user_agent = user_agent
+        except:
+            pass
+    return await call_next(request)
+
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    """
+    fastapi middleware add process time for response header
+    reference: https://fastapi.tiangolo.com/tutorial/middleware/
+    """
+    if not request.url.path.startswith('/static'):
+        start_time = time.time()
+        response = await call_next(request)
+        process_time = time.time() - start_time
+        response.headers["X-Process-Time"] = str(process_time)
+        return response
     return await call_next(request)
 
 # def check_login(request: Request):
