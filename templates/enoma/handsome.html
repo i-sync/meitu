@@ -36,7 +36,9 @@
                 <img src="/static/enoma/images/loading.gif" data-src="{{item.image_url}}" class="d-block lazy" alt="{{item.title}}" referrerpolicy="no-referrer" />
             </a>
             <div class="carousel-caption d-block d-md-block">
+                {% if item.model_title or item.model_name %}
                 <h5>{% if item.model_title %} {{item.model_title}} {% else %} {{item.model_name}} {% endif %}</h5>
+                {% endif %}
                 <p>{{item.title}}</p>
             </div>
         </div>
