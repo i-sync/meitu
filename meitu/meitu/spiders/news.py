@@ -14,7 +14,7 @@ class NewsSpider(scrapy.Spider):
     custom_settings = {
         'DOWNLOADER_MIDDLEWARES': {
             'meitu.middlewares.MeituMediaMiddleware': 500,
-            'meitu.middlewares.MeituProxyMiddleware': 543,
+            # 'meitu.middlewares.MeituProxyMiddleware': 543,
         },
         'ITEM_PIPELINES': {
             'meitu.pipelines.MeituMediaPipeline': 300,
@@ -46,7 +46,7 @@ class NewsSpider(scrapy.Spider):
         page_number = response.meta["page_number"] if "page_number" in response.meta else 1
         page_number += 1
         #if page_number <= last_page:
-        if page_number <= 57:
+        if page_number <= 3:
             next_url = f"{self.base_url}/news/index-{page_number}.html"
             print(page_number, "next page", next_url)
             yield scrapy.Request(url = next_url, callback=self.parse, meta={"page_number": page_number})
