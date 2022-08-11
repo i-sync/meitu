@@ -131,7 +131,7 @@ async def cache_html_response(request: Request, call_next):
             if response.status_code == 200:
                 # 写入缓存
                 response = await make_cached_data(response)
-                await cache.set(key, response, expire= 60 * 60)
+                await cache.set(key, response, expire= 60 * 60 * 24)
 
             return response
 

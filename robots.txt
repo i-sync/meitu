@@ -1,4 +1,24 @@
+User-agent: SemrushBot
+Disallow: /
+User-agent: DotBot
+Disallow: /
+User-agent: MegaIndex.ru
+Disallow: /
+User-agent: MauiBot
+Disallow: /
+User-agent: AhrefsBot
+Disallow: /
+User-agent: MJ12bot
+Disallow: /
+User-agent: BLEXBot
+Disallow: /
+
 User-agent: *
 Allow: /
+Disallow: /album/plus/count
+Disallow: /media/plus/count
+Disallow: /model/plus/count
+Disallow: /organize/plus/count
+Disallow: /tags/plus/count
 
 Sitemap: https://meitu.knit.bid/sitemap-index.xml
