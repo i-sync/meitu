@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 
-from sqlalchemy import func, desc
+from sqlalchemy import func, desc, distinct
 from sqlalchemy.sql import text
 # from sqlalchemy.engine.row import Row
 
@@ -46,6 +46,12 @@ async def tags(request: Request, page = "1"):
 @router.get('/tags/{name}', response_class=HTMLResponse)
 @router.get('/tags/{name}/{category_name}', response_class=HTMLResponse)
 async def tag_detail(request: Request, name, category_name = "beauty", page = "1"):
+    """
+        https://stackoverflow.com/questions/4617291/how-do-i-get-a-raw-compiled-sql-query-from-a-sqlalchemy-expression/36141722#36141722
+        print sqlchemy raw sql
+        q = session.query(func.count(distinct(MeituAlbum.id))).join(MeituAlbumTag, MeituAlbum.id == MeituAlbumTag.album_id).filter(MeituAlbum.category_name == category_name, MeituAlbum.is_enabled == 1).filter((MeituAlbumTag.tag_id == tag.id)|(MeituAlbum.title.contains(name)))
+        print(q.statement.compile(compile_kwargs={"literal_binds": True}))
+    """
     if not name:
         return RedirectResponse("/tags")
 
@@ -57,13 +63,13 @@ async def tag_detail(request: Request, name, category_name = "beauty", page = "1
 
         albums = medias = []
         if category_name == "beauty" or category_name == "handsome":
-            rows = session.query(func.count(MeituAlbum.id)).join(MeituAlbumTag, MeituAlbum.id == MeituAlbumTag.album_id).filter(MeituAlbum.category_name == category_name, MeituAlbum.is_enabled == 1).filter((MeituAlbumTag.tag_id == tag.id)|(MeituAlbum.title.contains(name))).scalar()
+            rows = session.query(func.count(distinct(MeituAlbum.id))).join(MeituAlbumTag, MeituAlbum.id == MeituAlbumTag.album_id).filter(MeituAlbum.category_name == category_name, MeituAlbum.is_enabled == 1).filter((MeituAlbumTag.tag_id == tag.id)|(MeituAlbum.title.contains(name))).scalar()
             page = Page(rows, page_index)
-            albums = session.query(MeituAlbum).join(MeituAlbumTag, MeituAlbum.id == MeituAlbumTag.album_id).filter(MeituAlbum.category_name == category_name, MeituAlbum.is_enabled == 1).filter((MeituAlbumTag.tag_id == tag.id)|(MeituAlbum.title.contains(name))).limit(page.limit).offset(page.offset).all()
+            albums = session.query(MeituAlbum).distinct(MeituAlbum.id).join(MeituAlbumTag, MeituAlbum.id == MeituAlbumTag.album_id).filter(MeituAlbum.category_name == category_name, MeituAlbum.is_enabled == 1).filter((MeituAlbumTag.tag_id == tag.id)|(MeituAlbum.title.contains(name))).limit(page.limit).offset(page.offset).all()
         elif category_name == "news" or category_name == "street":
-            rows = session.query(func.count(MeituMedia.id)).join(MeituMediaTag, MeituMedia.id == MeituMediaTag.media_id).filter(MeituMedia.category_name == category_name, MeituMedia.is_enabled == 1).filter((MeituMediaTag.tag_id == tag.id)|(MeituMedia.title.contains(name))).scalar()
+            rows = session.query(func.count(distinct(MeituMedia.id))).join(MeituMediaTag, MeituMedia.id == MeituMediaTag.media_id).filter(MeituMedia.category_name == category_name, MeituMedia.is_enabled == 1).filter((MeituMediaTag.tag_id == tag.id)|(MeituMedia.title.contains(name))).scalar()
             page = Page(rows, page_index)
-            medias = session.query(MeituMedia).join(MeituMediaTag, MeituMedia.id == MeituMediaTag.media_id).filter(MeituMedia.category_name == category_name, MeituMedia.is_enabled == 1).filter((MeituMediaTag.tag_id == tag.id)|(MeituMedia.title.contains(name))).limit(page.limit).offset(page.offset).all()
+            medias = session.query(MeituMedia).distinct(MeituMedia.id).join(MeituMediaTag, MeituMedia.id == MeituMediaTag.media_id).filter(MeituMedia.category_name == category_name, MeituMedia.is_enabled == 1).filter((MeituMediaTag.tag_id == tag.id)|(MeituMedia.title.contains(name))).limit(page.limit).offset(page.offset).all()
         else:
             return RedirectResponse("/404")
 
