@@ -343,18 +343,16 @@
                 </div>
             </section>
 
-            {% if request.state.user_agent.is_mobile %}
 
-            <!-- meitu mobile banner -->
-            <ins class="adsbyexoclick" data-zoneid="4893304"></ins>
-
-            {% else %}
-
-            <!-- meitu desktop banner -->
-            <ins class="adsbyexoclick" data-zoneid="4893300"></ins>
-
-
-            {% endif %}
+            <section class="row m-2">
+                {% if request.state.user_agent.is_mobile %}
+                <!-- meitu mobile banner -->
+                <ins class="adsbyexoclick" data-zoneid="4893304"></ins>
+                {% else %}
+                <!-- meitu desktop banner -->
+                <ins class="adsbyexoclick" data-zoneid="4893300"></ins>
+                {% endif %}
+            </section>
 
             <section class="portfolio_fluid_area pt-4">
                 {% block content %} {% endblock %}
