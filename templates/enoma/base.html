@@ -167,6 +167,27 @@
         <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=62d91940d4aca80019005e45&product=sop' async='async'></script>
 
         {% block head %}{% endblock %}
+
+        <style>
+            .breadcrumb_content .h1{
+                font-size: 72px;
+                line-height: 88px;
+                color: #fff;
+                margin-bottom: 0.5rem;
+            }
+            @media (max-width: 991px){
+                .breadcrumb_content .h1 {
+                    font-size: 60px;
+                    line-height: 70px;
+                }
+            }
+            @media (max-width: 576px){
+                .breadcrumb_content .h1 {
+                    font-size: 38px;
+                    line-height: 44px;
+                }
+            }
+        </style>
     </head>
     <body>
         <!-- exoclick base js -->
@@ -337,7 +358,7 @@
                 <div class="overlay"></div>
                 <div class="container">
                     <div class="breadcrumb_content">
-                        <h1>Meitu 美图欣赏</h1>
+                        <p class="h1">Meitu 美图欣赏</p>
                         <p>美女图片 明星帅哥 娱报 街拍</p>
                     </div>
                 </div>

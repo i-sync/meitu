@@ -5,14 +5,14 @@
 {% block metadata %}
 
 <meta name="keywords" content="{{ data.album.meta_keywords }}" />
-<meta name="description" content="{{ data.album.description }}" />
+<meta name="description" content="{{ data.album.description | truncate(150, False) }}" />
 <meta name="og:url" content="{{ request.url }}" />
 <meta name="og:title" content="{{ data.album.title }} - {{data.meta.site_name}}" />
-<meta name="og:description" content="{{ data.album.description  }}" />
+<meta name="og:description" content="{{ data.album.description | truncate(150, False) }}" />
 <meta name="og:image" content="{{data.album.cover }}" />
 <meta name="twitter:url" content="{{request.url}}" />
 <meta name="twitter:title" content="{{ data.album.title }} - {{data.meta.site_name}}" />
-<meta name="twitter:description" content="{{ data.album.description }}" />
+<meta name="twitter:description" content="{{ data.album.description | truncate(150, False) }}" />
 <meta name="twitter:image" content="{{data.album.cover }}" />
 <meta name="twitter:card" content="summary_large_image" />
 

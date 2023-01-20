@@ -4,19 +4,19 @@
 
 {% block metadata %}
 <meta name="keywords" content="{{ data.keywords }}" />
-<meta name="description" content="{{ data.album.description }}" />
+<meta name="description" content="{{ data.album.description | truncate(150, False) }}" />
 <meta name="og:url" content="{{ data.url }}" />
 <meta name="og:title" content="{{ data.album.title }}" />
-<meta name="og:description" content="{{ data.album.description  }}" />
+<meta name="og:description" content="{{ data.album.description | truncate(150, False) }}" />
 <meta name="og:image" content="{{data.cover }}" />
 <meta name="twitter:url" content="{{data.url}}" />
 <meta name="twitter:title" content="{{ data.album.title }}" />
-<meta name="twitter:description" content="{{ data.album.description }}" />
+<meta name="twitter:description" content="{{ data.album.description | truncate(150, False) }}" />
 <meta name="twitter:image" content="{{data.cover }}" />
 <meta name="twitter:card" content="summary_large_image" />
 {% endblock %}
 
-{% block head %} 
+{% block head %}
 <style>
 .text-divider{margin: 2em 0; line-height: 0; text-align: center;}
 .text-divider span{background-color: #fff; padding: 1em;}
@@ -61,7 +61,7 @@
     {{ pagination_all('?page=', data.page) }}
         {% for image in data.images %}
         <img data-src="{{image.image_url}}" src="/static/images/loader.gif" class="img-fluid w-100 lazy mb-2" alt="{{data.album.title}}" referrerpolicy="no-referrer" />
-        {% endfor %} 
+        {% endfor %}
     {{ pagination_all('?page=', data.page) }}
 
 
