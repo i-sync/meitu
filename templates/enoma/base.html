@@ -175,9 +175,6 @@
         {% if request.state.user_agent.is_mobile %}
             <!-- mobile -->
 
-            <!-- meitu mobile banner -->
-             <ins class="adsbyexoclick" data-zoneid="4893304"></ins>
-
 
             <!-- meitu mobile popup  -->
             <script type="application/javascript">
@@ -217,12 +214,6 @@
         {% else %}
 
             <!-- desktop  -->
-
-
-            <!-- meitu desktop banner -->
-             <ins class="adsbyexoclick" data-zoneid="4893300"></ins>
-
-
             <!-- meitu desktop popup  -->
             <script type="application/javascript">
                 (function() {
@@ -351,6 +342,19 @@
                     </div>
                 </div>
             </section>
+
+            {% if request.state.user_agent.is_mobile %}
+
+            <!-- meitu mobile banner -->
+            <ins class="adsbyexoclick" data-zoneid="4893304"></ins>
+
+            {% else %}
+
+            <!-- meitu desktop banner -->
+            <ins class="adsbyexoclick" data-zoneid="4893300"></ins>
+
+
+            {% endif %}
 
             <section class="portfolio_fluid_area pt-4">
                 {% block content %} {% endblock %}
