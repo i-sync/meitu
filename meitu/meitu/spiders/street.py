@@ -131,7 +131,7 @@ class StreetSpider(scrapy.Spider):
             parser content html
             1. remove image style , width, height
             2. change image src attribute to data-src
-            3. update image src to `/static/images/loading.gif`
+            3. update image src to `/static/images/cartoon-snail-loading-loading-gif-animation_2734139.png`
             4. add lazyload class
             5. set referrerpolicy = no-referrer
             6. update image alt to title
@@ -144,13 +144,13 @@ class StreetSpider(scrapy.Spider):
             del img["width"]
             del img["height"]
 
-            # 2/3 change src -> data-src and src -> loading.gif
+            # 2/3 change src -> data-src and src -> cartoon-snail-loading-loading-gif-animation_2734139.png
             if img.has_attr("data-original"):
                 img_src = img.get("data-original")
                 del img["data-original"]
             else:
                 img_src = img.get("src")
-            img["src"] = "/static/images/loading.gif"
+            img["src"] = "/static/images/cartoon-snail-loading-loading-gif-animation_2734139.png"
             img["data-src"] = img_src
 
             # 4/5 add lazy class, set referrerpolicy="no-referrer"
