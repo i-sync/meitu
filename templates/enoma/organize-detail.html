@@ -5,14 +5,14 @@
 {% block metadata %}
 
 <meta name="keywords" content="{{data.organize.title}}, {{ data.meta.keywords }}" />
-<meta name="description" content="{{ data.organize.description }}" />
+<meta name="description" content="{{ data.organize.description | truncate(150, True) }}" />
 <meta name="og:url" content="{{ request.url }}" />
 <meta name="og:title" content="{{ data.organize.title }} - {{data.meta.site_name}}" />
-<meta name="og:description" content="{{ data.organize.description }}" />
+<meta name="og:description" content="{{ data.organize.description | truncate(150, True) }}" />
 <meta name="og:image" content="{% if data.organize.cover %}{{data.organize.cover}}{%else%}{{data.meta.site_url}}/static/enoma/images/meitu-square.png{% endif %}" />
 <meta name="twitter:url" content="{{request.url}}" />
 <meta name="twitter:title" content="{{ data.organize.title }} - {{data.meta.site_name}}" />
-<meta name="twitter:description" content="{{ data.organize.description }}" />
+<meta name="twitter:description" content="{{ data.organize.description | truncate(150, True) }}" />
 <meta name="twitter:image" content="{% if data.organize.cover %}{{data.organize.cover}}{%else%}{{data.meta.site_url}}/static/enoma/images/meitu-square.png{% endif %}" />
 <meta name="twitter:card" content="summary_large_image" />
 

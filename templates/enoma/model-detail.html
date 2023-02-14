@@ -1,14 +1,14 @@
 {% extends 'base.html' %} {% block title %}{{data.model.title}} - {{data.meta.site_name}}{% endblock %} {% block metadata %}
 
 <meta name="keywords" content="{{ data.model.meta_keywords }}" />
-<meta name="description" content="{{ data.model.description }}" />
+<meta name="description" content="{{ data.model.description | truncate(150, True) }}" />
 <meta name="og:url" content="{{ request.url }}" />
 <meta name="og:title" content="{{ data.model.title }} - {{data.meta.site_name}}" />
-<meta name="og:description" content="{{ data.model.description  }}" />
+<meta name="og:description" content="{{ data.model.description | truncate(150, True) }}" />
 <meta name="og:image" content="{{data.model.cover }}" />
 <meta name="twitter:url" content="{{request.url}}" />
 <meta name="twitter:title" content="{{ data.model.title }} - {{data.meta.site_name}}" />
-<meta name="twitter:description" content="{{ data.model.description }}" />
+<meta name="twitter:description" content="{{ data.model.description | truncate(150, True) }}" />
 <meta name="twitter:image" content="{{data.model.cover }}" />
 <meta name="twitter:card" content="summary_large_image" />
 

@@ -8,14 +8,14 @@
 {% block metadata %}
 
 <meta name="keywords" content="{{ data.media.meta_keywords }}" />
-<meta name="description" content="{{ data.media.description }}" />
+<meta name="description" content="{{ data.media.description | truncate(150, True) }}" />
 <meta name="og:url" content="{{ request.url }}" />
 <meta name="og:title" content="{{ data.media.title }} - {{data.meta.site_name}}" />
-<meta name="og:description" content="{{ data.media.description  }}" />
+<meta name="og:description" content="{{ data.media.description | truncate(150, True) }}" />
 <meta name="og:image" content="{{data.media.cover }}" />
 <meta name="twitter:url" content="{{request.url}}" />
 <meta name="twitter:title" content="{{ data.media.title }} - {{data.meta.site_name}}" />
-<meta name="twitter:description" content="{{ data.media.description }}" />
+<meta name="twitter:description" content="{{ data.media.description | truncate(150, True) }}" />
 <meta name="twitter:image" content="{{data.media.cover }}" />
 <meta name="twitter:card" content="summary_large_image" />
 
