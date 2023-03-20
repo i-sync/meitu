@@ -110,7 +110,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <link rel="shortcut icon" href="/static/enoma/images/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="/static/enoma/images/favicon-120x120.ico" type="image/x-icon" />
+        <link rel="icon" href="/static/enoma/images/favicon-120x120.ico" type="image/x-icon" />
+
         <title>{% block title %}{% endblock %}</title>
         {% block metadata %} {% endblock metadata %}
 
@@ -189,6 +191,35 @@
                     line-height: 44px;
                 }
             }
+
+
+#page-header {
+    position: relative;
+    width: 100%;
+    background-color: #49b1f5;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -o-transition: all .5s;
+    -ms-transition: all .5s;
+    transition: all .5s
+}
+
+#page-header:not(.not-top-img):before {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.3);
+    content: ''
+}
+
+#page-header.full_page {
+    height: 100vh;
+    background-attachment: fixed
+}
+
         </style>
     </head>
     <body>
