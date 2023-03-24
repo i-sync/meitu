@@ -1,11 +1,11 @@
 
 from datetime import timedelta
-from fastapi import Depends
+
+from fastapi import APIRouter, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login import LoginManager
 from fastapi_login.exceptions import InvalidCredentialsException
-from starlette.responses import Response, RedirectResponse
-from fastapi import APIRouter
+from starlette.responses import RedirectResponse, Response
 
 router = APIRouter()
 
@@ -33,7 +33,7 @@ async def login(response: Response, data: OAuth2PasswordRequestForm = Depends())
         raise InvalidCredentialsException  # you can also use your own HTTPException
     elif password != user['password']:
         raise InvalidCredentialsException
-    
+
     access_token = manager.create_access_token(
         data=dict(sub=email),
         expires=timedelta(days=7)

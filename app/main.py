@@ -1,40 +1,41 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import json, time, random
-import requests
+import json
+import random
+import time
 from base64 import b64decode
 from typing import Optional
 
-from fastapi import FastAPI, Request, Depends
+import requests
+from cashews import cache
+from fastapi import Depends, FastAPI, Request
+from fastapi.exceptions import HTTPException
 from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.exceptions import HTTPException
-
-from starlette.responses import Response, RedirectResponse
-from sqlalchemy import func, desc
-from sqlalchemy.sql import text
-
-
-from cashews import cache
-
-from user_agents import parse
-
-from slowapi.errors import RateLimitExceeded
 from slowapi import Limiter
+from slowapi.errors import RateLimitExceeded
 #from slowapi import _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
+from sqlalchemy import desc, func
+from sqlalchemy.sql import text
+from starlette.responses import RedirectResponse, Response
+from user_agents import parse
 
-from app.library.models import session_scope, MeituAlbum, MeituMedia, MeituAlbumTag, MeituCategory, MeituContent, MeituImage, MeituModel, MeituOrganize, MeituTag
-from app.routers import login, logs, beauty, handsome, news, street, model, tags, organize, search
-from app.routers.login import manager
+from app.common import COLORS, MENU, templates
+from app.library.config import configs
+from app.library.logger import logger
+from app.library.models import (MeituAlbum, MeituAlbumTag, MeituCategory,
+                                MeituContent, MeituImage, MeituMedia,
+                                MeituModel, MeituOrganize, MeituTag,
+                                session_scope)
+from app.library.page import Page, PageAll, get_page_index
 # from app.routers.beauty import beauty
 from app.library.tools import date_filter, datetime_filter
-from app.library.page import Page, PageAll, get_page_index
-from app.library.logger import logger
-from app.library.config import configs
-from app.common import MENU, COLORS, templates
+from app.routers import (beauty, handsome, login, logs, model, news, organize,
+                         search, street, tags)
+from app.routers.login import manager
 
 app = FastAPI()
 app.include_router(login.router)

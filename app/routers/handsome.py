@@ -1,19 +1,23 @@
-import os, json, time
+import json
+import os
+import time
+
+from app.common import COLORS, MENU, templates
+from app.library.config import configs, toDict
+from app.library.models import (MeituAlbum, MeituAlbumTag, MeituCategory,
+                                MeituContent, MeituImage, MeituModel,
+                                MeituOrganize, MeituTag, session_scope)
+from app.library.page import Page, PageAll, get_page_index
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-
-
-from sqlalchemy import func, desc
+from sqlalchemy import desc, func
 from sqlalchemy.sql import text
+from starlette.responses import RedirectResponse, Response
+
 # from sqlalchemy.engine.row import Row
 
-from starlette.responses import Response, RedirectResponse
 
-from app.common import MENU, COLORS, templates
-from app.library.models import session_scope, MeituAlbum, MeituAlbumTag, MeituCategory, MeituContent, MeituImage, MeituModel, MeituOrganize, MeituTag
-from app.library.page import Page, PageAll, get_page_index
-from app.library.config import toDict, configs
 
 
 

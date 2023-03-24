@@ -1,6 +1,8 @@
 import time
-from fastapi import APIRouter
+
 from app.library.logger import read_logs
+from fastapi import APIRouter
+
 router = APIRouter()
 
 @router.get('/api/logs')

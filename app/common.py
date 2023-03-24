@@ -5,7 +5,6 @@ from fastapi.templating import Jinja2Templates
 
 from app.library.tools import date_filter, datetime_filter
 
-
 templates = Jinja2Templates(directory="templates/enoma")
 # add custom filter
 templates.env.filters["datetime"] = datetime_filter

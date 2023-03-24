@@ -1,14 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from numpy import integer, tile
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime, Time, Float, ForeignKey
-from sqlalchemy.orm import sessionmaker, relationship
 from contextlib import contextmanager
 
 from app.library.config import configs
+from numpy import integer, tile
+from sqlalchemy import (Boolean, Column, DateTime, Float, ForeignKey, Integer,
+                        String, Text, Time, create_engine)
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship, sessionmaker
 
 engine = create_engine(f"mysql+pymysql://{configs.database.user}:{configs.database.password}@{configs.database.host}:{configs.database.port}/{configs.database.database}", pool_recycle=3600)
 DBSession = sessionmaker(bind=engine)

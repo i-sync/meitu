@@ -5,9 +5,10 @@
 config.py
 '''
 
+import json
 #import config_default
 import os.path
-import json
+
 
 class Dict(dict):
     '''

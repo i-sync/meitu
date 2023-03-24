@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os
-import time
 import json
+import os
 import random
+import time
+
 import requests
 
 # COLORS = [

@@ -1,5 +1,6 @@
 from app.library.config import configs
 
+
 def get_page_index(page_str):
     p = 1
     try:
