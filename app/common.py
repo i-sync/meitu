@@ -2,6 +2,8 @@
 
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 from app.library.tools import date_filter, datetime_filter
 
@@ -30,3 +32,6 @@ COLORS = [
     "warning",
     "info"
 ]
+
+
+limiter = Limiter(key_func=get_remote_address)

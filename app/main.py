@@ -23,7 +23,7 @@ from sqlalchemy.sql import text
 from starlette.responses import RedirectResponse, Response
 from user_agents import parse
 
-from app.common import COLORS, MENU, templates
+from app.common import COLORS, MENU, templates, limiter
 from app.library.config import configs
 from app.library.logger import logger
 from app.library.models import (MeituAlbum, MeituAlbumTag, MeituCategory,
@@ -66,7 +66,6 @@ def _rate_limit_exceeded_handler(request: Request, exc: RateLimitExceeded) -> Re
     )
     return response
 
-limiter = Limiter(key_func=get_remote_address)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
