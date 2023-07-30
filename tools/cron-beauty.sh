@@ -4,4 +4,4 @@ cd /var/www/meitu/meitu
 
 ts=`date "+%F %T"`
 
-nohup /usr/local/bin/scrapy crawl album > "nohup/nohup-album-$ts.out" 2>&1 &
+nohup /usr/local/bin/scrapy crawl beauty > "nohup/nohup-beauty-$ts.out" 2>&1 &
