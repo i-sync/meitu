@@ -35,10 +35,10 @@ class TagSpider(scrapy.Spider):
             item["title"] = l.xpath("./p/text()").extract_first().strip()
             cover = l.xpath("./img/@src").extract_first()
             item["cover"] = f"{self.base_url}{cover}" if cover and cover.startswith("/") else cover
-            
+
             yield scrapy.Request(url = f"{self.base_url}{link}", callback=self.detail_parse, meta={"item": item, "request_type": "tag", "tag_name": name })
             # break
-            
+
 
         page_number = response.meta["page_number"] if "page_number" in response.meta else 1
         page_number += 1
@@ -49,7 +49,7 @@ class TagSpider(scrapy.Spider):
             yield scrapy.Request(url = next_url, callback=self.parse, meta={"page_number": page_number})
 
     def detail_parse(self, response):
-        
+
         # time.sleep(random.random())
         item = response.meta["item"]
         summary = response.xpath("//div[@class='album_info']/h1/a/text()").extract_first().strip()

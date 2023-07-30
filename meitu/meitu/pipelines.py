@@ -29,6 +29,7 @@ class MeituModelPipeline:
         model.summary = item["summary"]
         model.description = item["description"]
         model.cover = item["cover"]
+        model.view_count = 0
         model.created_at = time.time()
         model.is_enabled = 1
         with session_scope() as session:
@@ -47,6 +48,7 @@ class MeituOrganizePipeline:
         model.summary = item["summary"]
         model.description = item["description"]
         model.cover = item["cover"]
+        model.view_count = 0
         model.created_at = time.time()
         model.is_enabled = 1
         with session_scope() as session:
@@ -65,6 +67,7 @@ class MeituTagPipeline:
         model.description = item["description"]
         model.cover = item["cover"]
         model.created_at = time.time()
+        model.view_count = 0
         model.is_enabled = 1
         with session_scope() as session:
             session.add(model)

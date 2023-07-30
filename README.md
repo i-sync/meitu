@@ -1,6 +1,6 @@
 # 美女写真
 
-使用 scrapy 爬取 xiurenb.com写真网站数据，建立写真网站，并不下载图片
+使用 scrapy 爬取 meijuntu.com写真网站数据，建立写真网站，并不下载图片
 
 ## Testing
 uvicorn app.main:app --host 0.0.0.0 --port=8200
@@ -10,8 +10,8 @@ uvicorn app.main:app --host 0.0.0.0 --port=8200
 > [https://github.com/laurentS/slowapi](https://github.com/laurentS/slowapi)
 
 ## Scrapy
-cd root/xiuren
-run `scrapy crawl album`
+cd project/meitu
+run `scrapy crawl tags`
 
 ## Check proxy list
-run `python3 /app/library/tools.py`
+#run `python3 /app/library/tools.py`
