@@ -13,7 +13,7 @@ class ModelSpider(scrapy.Spider):
     custom_settings = {
         'DOWNLOADER_MIDDLEWARES': {
             'meitu.middlewares.MeituModelMiddleware': 500,
-            'meitu.middlewares.MeituProxyMiddleware': 543,
+            #'meitu.middlewares.MeituProxyMiddleware': 543,
         },
         'ITEM_PIPELINES': {
             'meitu.pipelines.MeituModelPipeline': 300,

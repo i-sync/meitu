@@ -99,8 +99,9 @@ class BeautySpider(scrapy.Spider):
 
         total = response.xpath("//div[@class='main']/div[@class='content']/div[@class='pages']/a[position() = (last() - 1)]/text()").extract_first().strip()
         pages = []
-        for index in range(2, int(total)+1):
-            pages.append(f'/beauty/{item["name"]}-{index}.html')
+        if total.isdigit():
+            for index in range(2, int(total)+1):
+                pages.append(f'/beauty/{item["name"]}-{index}.html')
         if len(pages) > 0:
             link = pages.pop(0)
             yield scrapy.Request(url = f"{self.base_url}{link}", callback=self.sub_detail_parse, meta={"item": item, "pages": pages})

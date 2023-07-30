@@ -43,7 +43,7 @@ class TagSpider(scrapy.Spider):
         page_number = response.meta["page_number"] if "page_number" in response.meta else 1
         page_number += 1
         #if page_number <= last_page:
-        if page_number <= 18:
+        if page_number <= 19:
             next_url = f"{self.base_url}/tags/index-{page_number}.html"
             print(page_number, "next page", next_url)
             yield scrapy.Request(url = next_url, callback=self.parse, meta={"page_number": page_number})
