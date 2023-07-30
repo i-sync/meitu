@@ -15,7 +15,7 @@ class StreetSpider(scrapy.Spider):
     custom_settings = {
         'DOWNLOADER_MIDDLEWARES': {
             'meitu.middlewares.MeituMediaMiddleware': 500,
-            'meitu.middlewares.MeituProxyMiddleware': 543,
+            #'meitu.middlewares.MeituProxyMiddleware': 543,
         },
         'ITEM_PIPELINES': {
             'meitu.pipelines.MeituMediaPipeline': 300,

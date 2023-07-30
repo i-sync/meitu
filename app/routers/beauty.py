@@ -57,7 +57,7 @@ async def beauty(request: Request, page = "1", order = "new"):
     return templates.TemplateResponse("beauty.html", {"request": request, "data": data})
 
 @router.get('/beauty/{name}', response_class=HTMLResponse)
-@limiter.limit("2/minute")
+#@limiter.limit("2/minute")
 async def beauty_detail(request: Request, name, page="1"):
     if not name:
         return RedirectResponse("/beauty")
