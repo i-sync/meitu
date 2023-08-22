@@ -30,10 +30,10 @@ async def organize(request: Request, page = "1"):
         rows = session.query(func.count(MeituOrganize.id)).filter(MeituOrganize.is_enabled == 1).scalar()
         page = Page(rows, page_index)
 
-        sql = f"""select meitu_organize.*, count(meitu_album.id) as organize_count from meitu_organize
+        sql = text(f"""select meitu_organize.*, count(meitu_album.id) as organize_count from meitu_organize
                     left join meitu_album on meitu_organize.name = meitu_album.organize_name
                     group by meitu_organize.id
-                    order by organize_count desc limit {page.limit} offset {page.offset}"""
+                    order by organize_count desc limit {page.limit} offset {page.offset}""")
         organizes = session.execute(sql).fetchall()
 
     data ={

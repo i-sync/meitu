@@ -33,7 +33,7 @@ async def news(request: Request, page = "1", order = "new"):
         page = Page(rows, page_index)
 
         order_by = "view_count" if order == "hot" else "origin_created_at"
-        sql = f"select * from meitu_media where meitu_media.category_name = 'news' and meitu_media.is_enabled = 1 order by meitu_media.{order_by} desc limit {page.limit} offset {page.offset}"
+        sql = text(f"select * from meitu_media where meitu_media.category_name = 'news' and meitu_media.is_enabled = 1 order by meitu_media.{order_by} desc limit {page.limit} offset {page.offset}")
         medias = session.execute(sql).fetchall()
 
         if request.state.user_agent.is_mobile:

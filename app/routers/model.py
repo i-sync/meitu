@@ -32,25 +32,25 @@ async def model(request: Request, page = "1"):
         rows = session.query(func.count(MeituModel.id)).filter(MeituModel.is_enabled == 1).scalar()
         page = Page(rows, page_index)
 
-        sql = f"""select meitu_model.*, count(meitu_album.id) as model_count from meitu_model
+        sql = text(f"""select meitu_model.*, count(meitu_album.id) as model_count from meitu_model
                     left join meitu_album on meitu_model.name = meitu_album.model_name
                     group by meitu_model.id
-                    order by model_count desc limit {page.limit} offset {page.offset}"""
+                    order by model_count desc limit {page.limit} offset {page.offset}""")
         models = session.execute(sql).fetchall()
 
         '''
-        sql = f"""select count(1) as num from (select meitu_model.id, count(meitu_album.id) as model_count from meitu_model
+        sql = text(f"""select count(1) as num from (select meitu_model.id, count(meitu_album.id) as model_count from meitu_model
                     left join meitu_album on meitu_model.name = meitu_album.model_name
                     group by meitu_model.id
-                    having model_count > 0) as tmp"""
+                    having model_count > 0) as tmp""")
         rows = session.execute(sql).fetchone()
         page = Page(rows["num"], page_index)
 
-        sql = f"""select meitu_model.*, count(meitu_album.id) as model_count from meitu_model
+        sql = text(f"""select meitu_model.*, count(meitu_album.id) as model_count from meitu_model
                     left join meitu_album on meitu_model.name = meitu_album.model_name
                     group by meitu_model.id
                     having model_count > 0
-                    order by model_count desc limit {page.limit} offset {page.offset}"""
+                    order by model_count desc limit {page.limit} offset {page.offset}""")
         '''
 
     data ={

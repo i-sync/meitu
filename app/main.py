@@ -180,42 +180,42 @@ async def index(request: Request):
     with session_scope() as session:
 
         # models
-        sql = f"""select meitu_model.*, count(meitu_album.id) as model_count from meitu_model
+        sql = text(f"""select meitu_model.*, count(meitu_album.id) as model_count from meitu_model
                     left join meitu_album on meitu_model.name = meitu_album.model_name
                     where meitu_model.is_enabled = 1 and meitu_model.cover is not null
                     group by meitu_model.id
-                    order by model_count desc limit 12"""
+                    order by model_count desc limit 12""")
         models = session.execute(sql).fetchall()
 
         # tags
-        sql = f"""select meitu_tag.*, count(meitu_album_tag.id) as tag_count from meitu_tag
+        sql = text(f"""select meitu_tag.*, count(meitu_album_tag.id) as tag_count from meitu_tag
                     left join meitu_album_tag on meitu_tag.id = meitu_album_tag.tag_id
                     where meitu_tag.is_enabled = 1
                     group by meitu_tag.id
-                    order by tag_count desc limit 18"""
+                    order by tag_count desc limit 18""")
         tags = session.execute(sql).fetchall()
 
         # organizes
         organizes = []
-        # sql = f"""select meitu_organize.*, count(meitu_album.id) as organize_count from meitu_organize
+        # sql = text(f"""select meitu_organize.*, count(meitu_album.id) as organize_count from meitu_organize
         #             left join meitu_album on meitu_organize.name = meitu_album.organize_name
         #             where meitu_organize.is_enabled = 1
         #             group by meitu_organize.id
-        #             order by organize_count desc limit 20"""
+        #             order by organize_count desc limit 20""")
         # organizes = session.execute(sql).fetchall()
 
         # beauty
-        sql = """select meitu_album.*, meitu_model.title as model_title
+        sql = text("""select meitu_album.*, meitu_model.title as model_title
             from meitu_album
             left join meitu_model on meitu_album.model_name = meitu_model.name
-            where meitu_album.category_name = 'beauty' and meitu_album.is_enabled = 1 order by meitu_album.view_count desc limit 12"""
+            where meitu_album.category_name = 'beauty' and meitu_album.is_enabled = 1 order by meitu_album.view_count desc limit 12""")
         beauty = session.execute(sql).fetchall()
 
         # handsome
-        sql = """select meitu_album.*, meitu_model.title as model_title
+        sql = text("""select meitu_album.*, meitu_model.title as model_title
             from meitu_album
             left join meitu_model on meitu_album.model_name = meitu_model.name
-            where meitu_album.category_name = 'handsome' and meitu_album.is_enabled = 1 order by meitu_album.view_count desc limit 12"""
+            where meitu_album.category_name = 'handsome' and meitu_album.is_enabled = 1 order by meitu_album.view_count desc limit 12""")
         handsome = session.execute(sql).fetchall()
 
         # news
