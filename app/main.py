@@ -108,7 +108,7 @@ async def make_cached_data(response: StreamingResponse):
 
 cache.setup("mem://?check_interval=10&size=10000")
 
-@app.middleware("http")
+# @app.middleware("http")
 async def cache_html_response(request: Request, call_next):
     """
     How to cache StreamReponse or make a cache middleware
