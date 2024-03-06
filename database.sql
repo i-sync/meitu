@@ -2,7 +2,7 @@
 
 drop database if exists meitu;
 
-create database meitu;
+create database meitu CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 use meitu;
 
@@ -43,6 +43,7 @@ create table meitu_organize (
 
 
 -- alter table meitu_organize add column `view_count` int unsigned not null default 0 after `cover`;
+-- alter table meitu_organize add column `cover_backup` varchar(200) null after `cover`;
 
 create table meitu_tag (
     `id` int not null AUTO_INCREMENT,
@@ -60,6 +61,7 @@ create table meitu_tag (
 ) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- alter table meitu_tag add column `view_count` int unsigned not null default 0 after `cover`;
+-- alter table meitu_tag add column `cover_backup` varchar(200) null after `cover`;
 
 create table meitu_album (
     `id` int not null AUTO_INCREMENT,
