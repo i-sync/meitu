@@ -87,6 +87,7 @@ create table meitu_album (
     key `idx_category_name` (`category_name`),
     primary key (`id`)
 ) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- alter table meitu_album add column `cover_backup` varchar(200) null after `cover`;
 
 create table meitu_category (
     `id` int not null AUTO_INCREMENT,

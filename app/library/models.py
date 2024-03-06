@@ -79,6 +79,7 @@ class MeituAlbum(Base):
     title = Column(String(500))
     description = Column(String(2048))
     cover = Column(String(200))
+    cover_backup = Column(String(200))
     view_count = Column(Integer)
     origin_link = Column(String(500))
     origin_created_at = Column(Float)
