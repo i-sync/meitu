@@ -36,6 +36,7 @@ class MeituModel(Base):
     summary = Column(String(500))
     description = Column(String(2048))
     cover = Column(String(200))
+    cover_backup = Column(String(200))
     view_count = Column(Integer)
     created_at = Column(Float)
     is_enabled = Column(Boolean)

@@ -24,6 +24,7 @@ create table meitu_model (
 ) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- alter table meitu_model add column `view_count` int unsigned not null default 0 after `cover`;
+-- alter table meitu_model add column `cover_backup` varchar(200) null after `cover`;
 
 create table meitu_organize (
     `id` int not null AUTO_INCREMENT,
