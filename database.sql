@@ -15,6 +15,7 @@ create table meitu_model (
     `summary` varchar(500) null,
     `description` varchar(2048) null,
     `cover` varchar(200) null,
+    `cover_backup` varchar(200) null,
     `view_count` int unsigned not null default 0,
     `created_at` real not null,
     `is_enabled` bool not null default 1,
@@ -33,6 +34,7 @@ create table meitu_organize (
     `summary` varchar(500) null,
     `description` varchar(2048) null,
     `cover` varchar(200) null,
+    `cover_backup` varchar(200) null,
     `view_count` int unsigned not null default 0,
     `created_at` real not null,
     `is_enabled` bool not null default 1,
@@ -52,6 +54,7 @@ create table meitu_tag (
     `summary` varchar(500) null,
     `description` varchar(2048) null,
     `cover` varchar(200) null,
+    `cover_backup` varchar(200) null,
     `view_count` int unsigned not null default 0,
     `created_at` real not null,
     `is_enabled` bool not null default 1,
@@ -72,6 +75,7 @@ create table meitu_album (
     `title` varchar(500) not null,
     `description` varchar(2048) null,
     `cover` varchar(200) null,
+    `cover_backup` varchar(200) null,
     `view_count` int unsigned not null default 0,
     `origin_link` varchar(500) null,
     `origin_created_at` real not null,
@@ -147,6 +151,7 @@ create table meitu_media (
     `title` varchar(500) not null,
     `description` varchar(2048) null,
     `cover` varchar(200) null,
+    `cover_backup` varchar(200) null,
     `view_count` int unsigned not null default 0,
     `origin_link` varchar(500) null,
     `origin_created_at` real not null,
@@ -162,11 +167,13 @@ create table meitu_media (
     primary key (`id`)
 ) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- alter table meitu_media add column `cover_backup` varchar(200) null after `cover`;
 
 create table meitu_content (
     `id` int not null AUTO_INCREMENT,
     `media_id` int not null,
     `content` mediumtext not null,
+    `content_backup` mediumtext not null,
     `created_at` real not null,
     `updated_at` real not null,
     `is_enabled` bool not null default 1,
@@ -174,6 +181,7 @@ create table meitu_content (
     key `idx_media_id` (`media_id`),
     primary key (`id`)
 ) engine=innodb default charset=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- alter table meitu_content add column `content_backup` mediumtext null after `content`;
 
 
 create table meitu_media_tag (
