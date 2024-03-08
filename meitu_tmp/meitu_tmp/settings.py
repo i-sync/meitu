@@ -21,6 +21,9 @@ USER_AGENT = 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWeb
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
+# https://doc.scrapy.org/en/latest/topics/settings.html#download-timeout
+DOWNLOAD_TIMEOUT = 30
+
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 

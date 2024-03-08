@@ -31,7 +31,7 @@ class OrganizeSpider(scrapy.Spider):
 
         with session_scope() as session:
             # 从数据库中获取cover字段，并添加到start_urls
-            models = session.query(MeituImage).filter(MeituImage.backup_url == None, MeituImage.image_url.like('http%')).limit(10).all()
+            models = session.query(MeituImage.id, MeituImage.image_url).filter(MeituImage.backup_url == None, MeituImage.image_url.like('http%'), MeituImage.is_enabled == 1).limit(10).all()
             self.start_urls = [(model.id, model.image_url) for model in models]
 
 
