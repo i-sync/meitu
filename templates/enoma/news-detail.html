@@ -12,11 +12,11 @@
 <meta name="og:url" content="{{ request.url }}" />
 <meta name="og:title" content="{{ data.media.title }} - {{data.meta.site_name}}" />
 <meta name="og:description" content="{{ data.media.description | truncate(150, True) }}" />
-<meta name="og:image" content="{{data.media.cover }}" />
+<meta name="og:image" content="{{data.media.cover_backup }}" />
 <meta name="twitter:url" content="{{request.url}}" />
 <meta name="twitter:title" content="{{ data.media.title }} - {{data.meta.site_name}}" />
 <meta name="twitter:description" content="{{ data.media.description | truncate(150, True) }}" />
-<meta name="twitter:image" content="{{data.media.cover }}" />
+<meta name="twitter:image" content="{{data.media.cover_backup }}" />
 <meta name="twitter:card" content="summary_large_image" />
 
 {% endblock %}
@@ -92,7 +92,7 @@
                     <div class="gallery_post">
                         <div class="img">
                             <a href="/street/{{item.name}}" target="_blank">
-                                <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                                <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover_backup}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
                             </a>
                         </div>
                         <div class="gallery_content">
@@ -122,7 +122,7 @@
                     <div class="gallery_post">
                         <div class="img">
                             <a href="/street/{{item.name}}" target="_blank">
-                                <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                                <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover_backup}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
                             </a>
                         </div>
                         <div class="gallery_content">
@@ -165,7 +165,7 @@
             <div class="gallery_post">
                 <div class="img">
                     <a href="/news/{{item.name}}" target="_blank">
-                        <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                        <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover_backup}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
                     </a>
                 </div>
                 <div class="gallery_content">

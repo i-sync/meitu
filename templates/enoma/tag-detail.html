@@ -5,11 +5,11 @@
 <meta name="og:url" content="{{ request.url }}" />
 <meta name="og:title" content="{{ data.tag.title }} - {{data.meta.site_name}}" />
 <meta name="og:description" content="{{ data.tag.description | truncate(150, True) }}" />
-<meta name="og:image" content="{% if data.tag.cover %}{{data.tag.cover}}{%else%}{{data.meta.site_url}}/static/enoma/images/meitu-square.png{% endif %}" />
+<meta name="og:image" content="{% if data.tag.cover_backup %}{{data.tag.cover_backup}}{%else%}{{data.meta.site_url}}/static/enoma/images/meitu-square.png{% endif %}" />
 <meta name="twitter:url" content="{{request.url}}" />
 <meta name="twitter:title" content="{{ data.tag.title }} - {{data.meta.site_name}}" />
 <meta name="twitter:description" content="{{ data.tag.description | truncate(150, True) }}" />
-<meta name="twitter:image" content="{% if data.tag.cover %}{{data.tag.cover}}{%else%}{{data.meta.site_url}}/static/enoma/images/meitu-square.png{% endif %}" />
+<meta name="twitter:image" content="{% if data.tag.cover_backup %}{{data.tag.cover_backup}}{%else%}{{data.meta.site_url}}/static/enoma/images/meitu-square.png{% endif %}" />
 <meta name="twitter:card" content="summary_large_image" />
 
 {% endblock %}
@@ -34,7 +34,7 @@
     <div class="card flex-row flex-wrap my-3">
         <div class="row g-0 w-100">
             <div class="col-lg-3 col-md-3 col-sm-12">
-                <img class="model-thumb" src="{% if data.tag.cover %}{{data.tag.cover}}{%else%}/static/enoma/images/meitu-square.png{% endif %}"  referrerpolicy="no-referrer"  alt="{{data.tag.title}}" />
+                <img class="model-thumb" src="{% if data.tag.cover_backup %}{{data.tag.cover_backup}}{%else%}/static/enoma/images/meitu-square.png{% endif %}"  referrerpolicy="no-referrer"  alt="{{data.tag.title}}" />
             </div>
             <div class="col-lg-9 col-md-9 col-sm-12">
                 <div class="card-body">
@@ -65,7 +65,7 @@
                     <div class="gallery_post">
                         <div class="img">
                             <a href="/{{data.category_name}}/{{item.name}}" target="_blank">
-                                <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                                <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover_backup}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
                             </a>
                         </div>
                         <div class="gallery_content">
@@ -105,7 +105,7 @@
                     <div class="gallery_post">
                         <div class="img">
                             <a href="/{{data.category_name}}/{{item.name}}" target="_blank">
-                                <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                                <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover_backup}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
                             </a>
                         </div>
                         <div class="gallery_content">

@@ -5,11 +5,11 @@
 <meta name="og:url" content="{{ request.url }}" />
 <meta name="og:title" content="娱报 - {{data.meta.site_name}}" />
 <meta name="og:description" content="{{ data.meta.description  }}" />
-<meta name="og:image" content="{{ data.medias[0].cover }}" />
+<meta name="og:image" content="{{ data.medias[0].cover_backup }}" />
 <meta name="twitter:url" content="{{request.url}}" />
 <meta name="twitter:title" content="娱报 - {{data.meta.site_name}}" />
 <meta name="twitter:description" content="{{ data.meta.description }}" />
-<meta name="twitter:image" content="{{ data.medias[0].cover }}" />
+<meta name="twitter:image" content="{{ data.medias[0].cover_backup }}" />
 <meta name="twitter:card" content="summary_large_image" />
 
 {% endblock %}
@@ -33,7 +33,7 @@
         {% for item in data.tops %}
         <div class="carousel-item {% if loop.index0 == 0 %} active {% endif %} ">
             <a href="/news/{{item.name}}" target="_blank" alt="{{item.title}}" title="{{item.title}}">
-                <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover}}" class="d-block lazy" alt="{{item.title}}" referrerpolicy="no-referrer" />
+                <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover_backup}}" class="d-block lazy" alt="{{item.title}}" referrerpolicy="no-referrer" />
             </a>
             <div class="carousel-caption d-block d-md-block">
                 <!-- <h5>{% if item.model_title %} {{item.model_title}} {% else %} {{item.model_name}} {% endif %}</h5> -->
@@ -81,7 +81,7 @@
         <div class="gallery_post">
             <div class="img">
                 <a href="/news/{{item.name}}" target="_blank">
-                    <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
+                    <img src="/static/enoma/images/cartoon-snail-loading-loading-gif-animation_2734139.png" data-src="{{item.cover_backup}}" referrerpolicy="no-referrer" alt="{{item.title}}" class="lazy" />
                 </a>
             </div>
             <div class="gallery_content">
