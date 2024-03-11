@@ -6,7 +6,10 @@
 import scrapy
 
 
-class MeituTmpItem(scrapy.Item):
+class MeituContentItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    id = scrapy.Field()
+    image_urls = scrapy.Field()
+    content_backup = scrapy.Field()
+    image_paths = scrapy.Field()

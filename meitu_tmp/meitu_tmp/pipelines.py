@@ -6,6 +6,8 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+import scrapy
+from scrapy.pipelines.images import ImagesPipeline
 
 import re
 import os
@@ -233,3 +235,49 @@ class DownloadMediaImagesPipeline():
         with session_scope() as session:
             session.query(MeituMedia).filter(MeituMedia.id == item['id']).update({MeituMedia.cover_backup : os.path.join('/static/images',image_path)}, synchronize_session = False)
             session.commit()
+
+
+class ContentImagePipeline(ImagesPipeline):
+    default_headers = {
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+        "Referer": "junmeitu.com"
+    }
+
+    def file_path(self, request, response=None, info=None, *, item=None):
+
+        image_url = request.url
+        # 测试
+        year, month, day = extract_date_from_url(image_url)
+        # print(year, month, day)  # 输出：2022 01 01
+        if not year:
+            year, month, day = ('1970', '01', '01')
+
+        image_path = os.path.join(year, month, day, image_url.split('/')[-1])
+
+        return image_path
+
+    def get_media_requests(self, item, info):
+        for image_url in item['image_urls']:
+            yield scrapy.Request(image_url, headers=self.default_headers)
+
+    def item_completed(self, results, item, info):
+        image_paths = [x for ok, x in results if ok]
+        #print(image_paths)
+        if not image_paths:
+            raise DropItem("Item contains no images")
+        item['image_paths'] = image_paths
+        return item
+
+
+class DownloadContentImagesPipeline():
+    def process_item(self, item, spider):
+        if not item:
+            print("item no exists!")
+            return None
+
+
+        with session_scope() as session:
+            session.query(MeituContent).filter(MeituContent.id == item['id']).update({MeituContent.content_backup : item['content_backup']}, synchronize_session = False)
+            session.commit()
+
+        return item
