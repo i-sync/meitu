@@ -6,7 +6,7 @@ from app.library.models import session_scope, MeituModel, MeituOrganize, MeituAl
 
 from app.library.models import MeituMedia, MeituMediaModel, MeituMediaTag, MeituTmpModel
 
-class OrganizeSpider(scrapy.Spider):
+class AlbumSpider(scrapy.Spider):
     name = 'album'
     allowed_domains = ['example.com']
     start_urls = ['http://example.com/']
