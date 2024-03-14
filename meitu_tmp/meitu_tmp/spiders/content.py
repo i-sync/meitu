@@ -38,7 +38,7 @@ class ContentSpider(scrapy.Spider):
 
         with session_scope() as session:
             # 从数据库中获取cover字段，并添加到start_urls
-            models = session.query(MeituContent.id, MeituContent.content).filter(MeituContent.content_backup == None).limit(1).all()
+            models = session.query(MeituContent.id, MeituContent.content).filter(MeituContent.content_backup == None).limit(3).all()
             for model in models:
                 page_content = BeautifulSoup(model.content, 'html.parser')
                 images = page_content.find_all("img")
@@ -56,14 +56,14 @@ class ContentSpider(scrapy.Spider):
                         year, month, day = ('1970', '01', '01')
 
                     image_path = os.path.join('/static/images', year, month, day, img_src.split('/')[-1])
-                    print(model.id, img_src, image_path)
+                    #print(model.id, img_src, image_path)
                     img["data-src"] = image_path
                     img["src"] = "/static/imgs/loading.gif"
 
                 content_backup = str(page_content)
                 # yield {"id": model.id, "image_urls": image_urls, "content_backup": content_backup}
 
-                yield scrapy.Request(url='http://www.example.com', callback=self.parse, meta={"id": model.id, "image_urls": image_urls, "content_backup": content_backup})
+                yield scrapy.Request(url=f'http://www.example.com/{model.id}', callback=self.parse, meta={"id": model.id, "image_urls": image_urls, "content_backup": content_backup})
 
     def parse(self, response):
         item = MeituContentItem()

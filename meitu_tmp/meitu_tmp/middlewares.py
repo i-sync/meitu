@@ -118,7 +118,7 @@ class MeituTmpIgnoreDownloaderMiddleware:
         return s
 
     def process_request(self, request, spider):
-        if request.url == "http://www.example.com":
+        if request.url.startswith("http://www.example.com"):
             print("ignore ============>", request.url)
             return TextResponse(
                 url=request.url,

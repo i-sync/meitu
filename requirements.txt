@@ -18,3 +18,4 @@ user-agents
 slowapi
 cashews[aioredis]
 jinja2
+pillow
