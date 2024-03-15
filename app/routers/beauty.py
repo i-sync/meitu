@@ -91,7 +91,7 @@ async def beauty_detail(request: Request, name, page="1"):
 
         # related album
         # https://stackoverflow.com/questions/2142922/mysql-select-related-objects-by-tags
-        sql = text("""SELECT album.id, album.name, album.title, album.cover, album.model_name, album.origin_created_at, album.view_count, model.title as model_title, COUNT(1) AS tag_count
+        sql = text("""SELECT album.id, album.name, album.title, album.cover_backup, album.model_name, album.origin_created_at, album.view_count, model.title as model_title, COUNT(1) AS tag_count
             FROM meitu_album_tag T1
             JOIN meitu_album_tag T2
             ON T1.tag_id = T2.tag_id AND T1.album_id != T2.album_id

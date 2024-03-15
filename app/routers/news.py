@@ -92,7 +92,7 @@ async def news_detail(request: Request, name, page="1"):
         # related media
         if len(media.tags):
             # https://stackoverflow.com/questions/2142922/mysql-select-related-objects-by-tags
-            sql = text("""SELECT media.id, media.name, media.title, media.cover, media.origin_created_at, media.view_count,  COUNT(1) AS tag_count
+            sql = text("""SELECT media.id, media.name, media.title, media.cover_backup, media.origin_created_at, media.view_count,  COUNT(1) AS tag_count
                 FROM meitu_media_tag T1
                 JOIN meitu_media_tag T2
                 ON T1.tag_id = T2.tag_id AND T1.media_id != T2.media_id
