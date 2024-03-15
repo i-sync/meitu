@@ -8,6 +8,7 @@
 from itemadapter import ItemAdapter
 import scrapy
 from scrapy.pipelines.images import ImagesPipeline
+from scrapy.exceptions import DropItem
 
 import re
 import os
